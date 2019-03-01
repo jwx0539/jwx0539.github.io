@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ASVS,应用安全,安全评估,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言关于ASVS是OWASP开源项目下的关于应用安全的评估标准，可服务于后期RFC评审等等标准对接，经查询3.1版本暂无中文版，于是粗略翻译供查看，附原文链接: https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project 什么是ASVSOWASP应用程序安全验证标">
+<meta name="keywords" content="ASVS,应用安全,安全评估">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用安全评估标准3.1翻译版(ASVS)">
+<meta property="og:url" content="http://yoursite.com/2018/08/03/应用安全评估标准3.1(ASVS)/index.html">
+<meta property="og:site_name" content="Cc丶MySunshine">
+<meta property="og:description" content="前言关于ASVS是OWASP开源项目下的关于应用安全的评估标准，可服务于后期RFC评审等等标准对接，经查询3.1版本暂无中文版，于是粗略翻译供查看，附原文链接: https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project 什么是ASVSOWASP应用程序安全验证标">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-03T13:08:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="应用安全评估标准3.1翻译版(ASVS)">
+<meta name="twitter:description" content="前言关于ASVS是OWASP开源项目下的关于应用安全的评估标准，可服务于后期RFC评审等等标准对接，经查询3.1版本暂无中文版，于是粗略翻译供查看，附原文链接: https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project 什么是ASVSOWASP应用程序安全验证标">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/03/应用安全评估标准3.1(ASVS)/">
+
+
+
+
+
+  <title>应用安全评估标准3.1翻译版(ASVS) | Cc丶MySunshine</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Cc丶MySunshine</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/03/应用安全评估标准3.1(ASVS)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cc丶MySunshine">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Cc丶MySunshine">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">应用安全评估标准3.1翻译版(ASVS)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T20:26:40+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web渗透/" itemprop="url" rel="index">
+                    <span itemprop="name">Web渗透</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>关于ASVS是OWASP开源项目下的关于应用安全的评估标准，可服务于后期RFC评审等等标准对接，经查询3.1版本暂无中文版，于是粗略翻译供查看，附原文链接:</p>
+<p><a href="https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project" target="_blank" rel="noopener">https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project</a></p>
+<h1 id="什么是ASVS"><a href="#什么是ASVS" class="headerlink" title="什么是ASVS"></a>什么是ASVS</h1><p>OWASP应用程序安全验证标准(ASVS)项目为测试web应用程序技术安全控制提供了基础，并为开发人员提供了安全开发人员的需求列表</p>
+<h2 id="V1-架构、设计和威胁建模需求"><a href="#V1-架构、设计和威胁建模需求" class="headerlink" title="V1:架构、设计和威胁建模需求"></a>V1:架构、设计和威胁建模需求</h2><ol>
+<li>所有的应用程序组件都被识别出来，并知道需要这些组件。</li>
+<li>安全控制从来不只在客户端执行，而是在各自的远程端点上执行。</li>
+<li>应用程序和所有连接的远程服务的高级体系结构已经被定义，安全性已经在该体系结构中得到了解决。</li>
+<li>在应用程序上下文中被认为敏感的数据被清楚地标识出来。</li>
+<li>所有应用程序组件都是根据它们提供的业务功能和/或安全功能来定义的。</li>
+<li>已经为应用程序和相关的远程服务生成了一个威胁模型，用于识别潜在的威胁和对策。</li>
+<li>所有的安全控制都有一个集中的实现。</li>
+<li>组件通过定义的安全控制(如网络分割、防火墙规则或基于云的安全组)彼此隔离。</li>
+<li>存在执行应用程序更新的机制。</li>
+<li>安全性在软件开发生命周期的所有部分中都得到了解决。</li>
+<li>所有应用程序组件、库、模块、框架、平台和操作系统都没有已知的漏洞</li>
+<li>对于如何管理加密密钥(如果有的话)，有一个明确的策略，并强制执行加密密钥的生命周期。理想情况下，遵循一个关键的管理标准，比如NIST SP 800-57。</li>
+</ol>
+<h2 id="V2-身份验证需求"><a href="#V2-身份验证需求" class="headerlink" title="V2:身份验证需求"></a>V2:身份验证需求</h2><ol>
+<li>验证所有的页面和资源都受到服务器端身份验证的保护，除了那些特别要公开的页面和资源。</li>
+<li>验证应用程序没有自动填写凭据——可以作为隐藏字段、URL参数、Ajax请求，也可以作为表单，因为这意味着纯文本、可逆或去隐密码存储。随机时间限制是可以接受的作为立场，如保护更改密码表格或忘记密码表格。</li>
+<li>验证所有身份验证控制是否安全，以确保攻击者不能进入</li>
+<li>验证密码输入字段，允许或者鼓励使用密码，并且不防止输入长密码或高度复杂的密码。</li>
+<li>验证所有的鉴定函数(如忘记密码、更改密码、更改电子邮件、管理2FA令牌等)都具有安全控制，作为主要的身份验证机制(如登录表单)。</li>
+<li>验证修改密码功能包括旧密码、新密码和密码确认。</li>
+<li>验证所有身份验证决策可以被记录，而不存储敏感的会话标识符或密码。这应该包括对安全性调查所需的相关元数据的请求。</li>
+<li>验证帐户密码是使用盐进行散列处理的一种方式，并且有足够的工作因素来击败暴力破解和密码散列恢复攻击。</li>
+<li>验证所有应用程序数据是通过加密的通道(例如TLS)传输的。</li>
+<li>验证忘记的密码功能和其他路径恢复没有显示当前密码，并且新密码没有以明文发送给用户。应该使用一次性密码重置链接。</li>
+<li>验证不能通过登录、密码重置或忘记帐户功能进行信息枚举。</li>
+<li>验证应用程序框架或应用程序使用的任何组件没有使用默认密码(如“admin/password”)。</li>
+<li>验证反自动化已就绪，以防止违反证书测试、暴力破解和帐户锁定攻击。</li>
+<li>验证所有访问应用程序外部服务的身份验证凭证都已加密并存储在受保护位置。</li>
+<li>验证忘记密码和其他恢复路径使用TOTP或其他软标记、移动推送或其他脱机恢复机制。SMS的使用已经被NIST弃用，不应该使用。</li>
+<li>验证帐户锁定被划分为软锁和硬锁状态，这些不是互斥的。如果一个帐户由于暴力攻击而暂时被软锁定，这不应该重置硬锁定状态。</li>
+<li>验证如果需要保密问题，这些问题不会违反隐私法，并且足够强大，可以保护帐户免受恶意恢复。</li>
+<li>验证高值应用程序可以配置为不允许使用大量以前配置的密码。</li>
+<li>验证敏感操作(例如更改密码、更改电子邮件地址、添加新的订单等等)需要重新验证(例如密码或2FA令牌)。这是对CSRF措施的补充，而不是相反。</li>
+<li>验证已采取措施阻止常用密码和弱密码短语的使用。</li>
+<li>验证所有身份验证挑战(无论成功还是失败)都应该在相同的平均响应时间内响应。</li>
+<li>验证源代码或在线源代码仓库中不包含机密、API密钥和密码。</li>
+<li>验证用户可以注册并使用TOTP验证、双因素、生物特征识别(Touch ID或类似的)或等效的多因素验证机制，以提供对单因素凭证披露的保护</li>
+<li>验证对管理接口的访问是严格控制的，不允许不受信任的机构访问。</li>
+<li>验证应用程序与基于浏览器和第三方的密码管理器兼容，除非被基于政策的风险禁止。</li>
+</ol>
+<h2 id="V3-会话管理验证需求。"><a href="#V3-会话管理验证需求。" class="headerlink" title="V3:会话管理验证需求。"></a>V3:会话管理验证需求。</h2><ol>
+<li>验证当用户注销时会话无效。</li>
+<li>验证在一定的不活动周期后会话超时。</li>
+<li>验证在管理可配置的最大时间周期之后的会话超时，而不考虑活动(绝对超时)。</li>
+<li>验证所有需要身份验证的页面都具有简单和可见的注销功能。</li>
+<li>测试会话ID从不在URL、错误消息或日志中公开。这包括验证应用程序不支持会话cookie的URL重写。</li>
+<li>验证所有成功的身份验证和重新身份验证都生成一个新的会话和会话ID。</li>
+<li>验证应用程序框架生成的会话ID是被应用程序识别为活跃的。</li>
+<li>根据诸如随机性、惟一性、对统计和图形分析的抵抗力和信息泄漏等标准测试会话ID。</li>
+<li>验证会话ID存储在cookie中使用“path”属性确定范围;并且启用了“HttpOnly”和“Secure”cookie标志。</li>
+<li>验证应用程序跟踪所有活跃会话，并且允许用户有选择地或全局地终止会话。</li>
+<li>验证高价值的应用程序，在成功更改密码过程之后，用户将被提示终止所有其他活动会话。</li>
+<li>TBA</li>
+</ol>
+<h2 id="V4-访问控制验证需求"><a href="#V4-访问控制验证需求" class="headerlink" title="V4:访问控制验证需求"></a>V4:访问控制验证需求</h2><ol>
+<li>验证最小权限原则的存在——用户应该只能够访问具有特定授权的功能、数据文件、URL、控制器、服务和其他资源。这意味着防止欺骗和权限提升。</li>
+<li>验证对敏感记录的访问是受保护的，这样每个用户只能访问经过授权的对象或数据(例如，防止用户篡改参数以查看或更改另一个用户的帐户)。</li>
+<li>验证禁止了目录遍历，除非故意要求。此外，应用程序不应该允许发现或者披露文件或者目录元数据，比如Thumbs.db,DS_Store,.git或者.svn文件夹。</li>
+<li>验证准入控制失败的安全性。</li>
+<li>验证表示层隐含的相同访问控制规则在服务器端强制执行。</li>
+<li>验证访问控制所使用的所有用户、数据属性和策略信息不能被终端用户操作，除非经过特别授权。</li>
+<li>验证存在用于保护对每种受保护资源访问的集中机制(包括调用外部授权服务的库)。‘</li>
+<li>验证所有访问控制决策被记录，并且所有失败决策也被记录。</li>
+<li>验证应用程序或框架使用强随机反CSRF令牌或者具有其他事务保护机制。</li>
+<li>验证系统可以防止聚合或连续访问受保护的功能、资源或数据。例如，考虑使用资源管理器来限制每小时的编辑量，或者防止单个用户剪贴整个数据库。</li>
+<li>验证应用程序对低价值系统具有额外的授权(例如:提高或者自适应的身份认证)，以及对高价值应用程序执行反欺诈控制的职责分离(根据应用程序的风险和过去的欺诈行为)。<br>12.验证应用程序正确地执行上下文敏感的授权，来防止通过参数篡改来进行未经授权的操作。</li>
+</ol>
+<h2 id="V5-输入验证和输出编码验证需求"><a href="#V5-输入验证和输出编码验证需求" class="headerlink" title="V5:输入验证和输出编码验证需求"></a>V5:输入验证和输出编码验证需求</h2><ol>
+<li>验证服务端输入验证失败导致请求拒绝并被记录。</li>
+<li>验证在服务端执行输入验证的过程。</li>
+<li>验证应用程序使用了集中式输入验证控制机制。</li>
+<li>验证所有数据库查询都受到使用参数化查询保护或正确使用ORM来避免SQL注入。</li>
+<li>验证应用程序不受LDAP注入的影响，或者安全控制防止LDAP注入。</li>
+<li>验证应用程序不受OS命令注入的影响，或者安全控制防止OS命令注入。</li>
+<li>验证应用程序在使用文件路径为内容时，不受远程文件包含或本地文件包含的影响。</li>
+<li>验证应用程序不受Xpath注入或者XML注入攻击的影响。</li>
+<li>验证放置在HTML或其他web客户端代码中的所有字符串变量都是准确地根据上下文进行人工编码，或者使用自动根据上下文编码的模板，以确保应用程序不受反射、存储或DOM跨站点脚本(XSS)攻击的影响。</li>
+<li>验证应用程序不包含大量参数分配(即自动变量绑定)漏洞。</li>
+<li>验证应用程序有针对HTTP参数污染攻击的防御，特别是如果应用程序框架没有区分请求参数的来源(GET、POST、cookies、header、环境等)。</li>
+<li>验证所有输入数据都是经过验证的，不仅是HTML表单字段，还包括所有输入源，如REST调用、查询参数、HTTP头、cookie、批处理文件、RSS提要等;使用积极的验证(白名单)，然后使用较小的验证表单，如灰色列表(消除已知的坏字符串)，或者拒绝恶意的输入(黑名单)。</li>
+<li>验证结构化数据是强类型的，并根据已定义的模式进行验证，包括允许的字符、长度和样式(例如信用卡号或手机号，或验证两个相关字段是否合理，例如验证郊区和邮政编码是否匹配)。</li>
+<li>验证非结构化数据被审查执行通用安全措施，例如允许的字符串和长度，在给定的上下文存在潜在危害应该避免的字符串。</li>
+<li>验证所有来自WYSIWYG编辑器或类似的不受信任的HTML输入都通过HTML审查库或框架特性得到了正确的审查。</li>
+<li>验证数据从一个DOM环境传输到另一个DOM环境，传输使用安全的JavaScript方法，例如使用innerText或.val来确保应用程序不受DOM跨站点脚本攻击的影响。</li>
+<li>验证在浏览器或基于JavaScript后端解析JSON时，JSON.parse被用来解析JSON文档，不要使用eval()解析JSON。</li>
+<li>验证应用程序是否存在服务端请求伪造漏洞。</li>
+<li>验证应用程序正确地限制XML解析器只使用最严格的配置，并确保禁用诸如解析外部实体之类的危险特性。</li>
+<li>验证在反序列化无法避免时禁止反序列化不可信数据或者对反序列化进行极度防护。</li>
+</ol>
+<h2 id="V7-密码验证需求"><a href="#V7-密码验证需求" class="headerlink" title="V7:密码验证需求"></a>V7:密码验证需求</h2><ol>
+<li>验证所有加密模块失败的安全性，并且以不支持填充Oracle的方式处理错误。</li>
+<li>验证所有随机数、随机文件名、随机GUIDs和随机字符串都是在攻击者无法猜测的情况下，使用加密模块的已批准的随机数生成器生成的</li>
+<li>验证应用程序使用的加密算法是否已根据FIPS 140-2或等效标准进行验证。</li>
+<li>验证加密模块根据已发布的安全策略在其已批准的模式下运行。</li>
+<li>验证是否有明确的策略来管理加密密钥(例如，生成、分发、撤销、过期)。验证这个密钥的生命周期被合理执行。</li>
+<li>加密服务的所有使用者没有直接访问密钥原材料。隔离加密进程，包括主秘密，并考虑使用虚拟化或物理硬件密钥库(HSM)。</li>
+<li>验证个人身份信息和其他敏感数据是加密存储的。</li>
+<li>验证在内存中维护的敏感密码或密钥材料在不再需要时就被用零覆盖，以减轻内存转储攻击。</li>
+<li>验证所有密钥和密码都是可替换的，并在安装时生成或替换。</li>
+<li>验证随机数是在适当的熵中创建的，即使应用程序处于重载状态，应用程序在这种情况下会优雅地降级。</li>
+</ol>
+<h2 id="V8-错误处理和日志验证需求"><a href="#V8-错误处理和日志验证需求" class="headerlink" title="V8:错误处理和日志验证需求"></a>V8:错误处理和日志验证需求</h2><ol>
+<li>验证应用程序不输出包含敏感数据的错误消息或堆栈跟踪，这些数据可能帮助攻击者，包括会话ID、软件/框架版本和个人信息。</li>
+<li>验证安全控件中的错误处理逻辑在默认情况下拒绝访问。</li>
+<li>验证安全日志控件提供记录与安全性相关的成功登录特别是失败事件的能力。</li>
+<li>验证每个日志事件包含必要的信息，以便在事件发生时对时间轴进行详细的调查。</li>
+<li>验证包含不可信数据的所有事件将不会作为代码在预期的日志软件查看中执行。</li>
+<li>验证安全日志受保护不被未经授权的访问和修改。</li>
+<li>验证应用程序不记录根据本地隐私法律或规章定义的敏感数据、由风险评估定义的组织敏感数据，或可能帮助攻击者的敏感身份验证数据，包括用户的会话标识符、密码、散列或API令牌。</li>
+<li>验证所有不可打印的符号和字段分隔符在日志条目中正确编码，以防止日志注入。</li>
+<li>验证来自受信任和不受信任源的日志字段在日志条目中是可区分的。</li>
+<li>验证审计日志或类似的日志允许密钥事务的不可否认性。</li>
+<li>验证安全日志有某种形式的完整性检查或控制，以防止未经授权的修改。</li>
+<li>验证日志存储在与应用程序运行的不同的分区上，并进行适当的日志轮换。</li>
+<li>确认时间源被同步到正确的时间和时区。</li>
+</ol>
+<h2 id="V9-数据保护验证要求"><a href="#V9-数据保护验证要求" class="headerlink" title="V9:数据保护验证要求"></a>V9:数据保护验证要求</h2><ol>
+<li>验证所有包含敏感信息的表单都禁用了客户端缓存，包括自动完成特性。</li>
+<li>验证应用程序处理的敏感数据列表是否被识别，并且有一个明确的策略，即如何在相关的数据保护指令下控制、加密和强制访问这些数据。</li>
+<li>验证所有敏感数据都被通过HTTP消息体或报头发送到服务器(例如，URL参数从不用于发送敏感数据)。</li>
+<li>验证应用程序设置了足够的反缓存头信息，这样，应用程序或用户输入的任何敏感和个人信息都不应该被主流的现代浏览器缓存到磁盘上(例如:访问:cache来检查磁盘缓存)。</li>
+<li>验证服务器上存储的包含敏感数据的所有缓存或者临时副本，在授权用户访问敏感数据后包含不被未经授权访问或者权限无效。</li>
+<li>验证是否有一种方法可以在需求保留策略结束时从应用程序中删除每种类型的敏感数据。</li>
+<li>验证应用程序最小化请求中的参数数量，例如隐藏字段、Ajax变量、cookie和header值。</li>
+<li>验证应用程序是否有能力检测和告警异常数量的数据采集请求，例如屏幕抓取。</li>
+<li>验证存储在客户端存储器中的数据(如HTML5本地存储、会话存储、IndexedDB、常规cookie或Flash cookie)不包含敏感数据或个人身份信息。</li>
+<li>如果数据时在相关数据保护指令或者需要记录访问日志中收集的，则验证是否记录了对敏感数据的访问。</li>
+<li>验证在内存中维护的敏感信息在不再需要时就被用零覆盖，以减轻内存转储攻击。</li>
+<li>验证在客户端或会话终止后，已验证的数据已从客户端存储中(如浏览器DOM)清除。</li>
+</ol>
+<h2 id="V10-通信验证需求"><a href="#V10-通信验证需求" class="headerlink" title="V10:通信验证需求"></a>V10:通信验证需求</h2><ol>
+<li>验证可构建一条路径从可信的CA证书到美国传输层安全(TLS)服务器证书，并且每个服务器证书都是有效的。</li>
+<li>验证TLS用于经过身份验证的或涉及敏感数据或功能的所有连接(包括外部和后端连接)，并且不会退回到不安全或未加密的协议。确保最强的选择是首选算法。</li>
+<li>验证后端TLS连接失败被记录。</li>
+<li>使用配置的信任锚点和撤销信息来验证所有客户端证书的证书路径。</li>
+<li>验证所有涉及敏感信息或功能的外部系统连接都经过了身份验证。</li>
+<li>验证应用程序使用的单一标准的TLS被配置为运行在批准的操作模式中。</li>
+<li>验证TLS证书公钥固定(HPKP)是通过生产和备份公钥实现的。有关更多信息，请参阅下面的参考资料。</li>
+<li>验证HTTP严格安全传输请求头包含在所有请求和所有子域，例如严格安全传输:max-age=15724800;includeSubdomains。</li>
+<li>验证产品网站URL已提交给由web浏览器供应商维护的严格安全传输域的预加载列表。请参阅下面的参考资料。</li>
+<li>验证完美的前向保密配置以减少被动攻击者记录流量。</li>
+<li>验证是否启用并配置了适当的证书撤销，如在线证书状态协议(OCSP)封套。</li>
+<li>验证仅使用强算法、密码和协议通过所有证书层次结构，包括所选机构的根证书和中间证书。</li>
+<li>验证TLS设置是否符合当前的主要实践，特别是当常见配置、密码和算法变得不安全时。</li>
+</ol>
+<h2 id="V13-恶意代码验证要求"><a href="#V13-恶意代码验证要求" class="headerlink" title="V13:恶意代码验证要求"></a>V13:恶意代码验证要求</h2><ol>
+<li>验证所有的恶意活动都被充分地沙箱、容器化或隔离，以延迟和阻止攻击者攻击其他应用程序。</li>
+<li>验证应用程序源代码和尽可能多的第三方库不包含后门、复活节彩蛋以及在身份验证、访问控制、输入验证和高价值业务员逻辑中的逻辑缺陷。</li>
+</ol>
+<h2 id="V15-业务逻辑验证需求"><a href="#V15-业务逻辑验证需求" class="headerlink" title="V15:业务逻辑验证需求"></a>V15:业务逻辑验证需求</h2><ol>
+<li>验证应用程序将只按顺序的步骤处理业务逻辑流，所有步骤都在实际的人工时间内进行处理，而不是乱序执行、跳过步骤、从另一个用户处理步骤或提交的事务过于迅速。</li>
+<li>验证应用程序是否具有业务限制，并根据每个用户正确地实施，使用可配置的警报和对自动或异常攻击的自动反应。</li>
+</ol>
+<h2 id="V16-文件和资源验证需求"><a href="#V16-文件和资源验证需求" class="headerlink" title="V16:文件和资源验证需求"></a>V16:文件和资源验证需求</h2><ol>
+<li>验证URL重定向和转发只允许白名单目标地址，或者在重定向到可能不受信任的内容时显示警告。</li>
+<li>验证提交给应用程序的不受信任的文件数据没有直接用于文件I/O命令，特别是为了防止路径遍历、本地文件包含、文件MIME类型、反射文件下载和OS命令注入漏洞。</li>
+<li>验证从不可信源获取的文件被验证为可预期类型，并通过反病毒扫描器进行扫描，以防止已知的恶意内容的上传。</li>
+<li>验证不受信任的数据不用于包含、类加载或反射功能，以防止远程/本地代码执行漏洞。</li>
+<li>验证不可信的数据不会被用于跨域资源共享(CORS)以保护不受任意远程内容的影响。</li>
+<li>验证从不受信任的源获取的文件存储在webroot之外，具有有限的权限，最好具有强验证。</li>
+<li>验证网站或应用服务器默认配置为拒绝访问网站或应用服务器之外的远程资源或系统。</li>
+<li>验证应用程序代码没有执行从不可信源获得的上传数据。</li>
+<li>验证不支持、不安全或已弃用的客户端技术没有被使用，例如NSAPI插件、Flash、Shockwave、Active-X、Silverlight、NACL或客户端Java applets。</li>
+<li>验证跨域资源共享(CORS)Access-Control-Origin请求头并不仅仅显示请求的源头或支持“null”源。</li>
+</ol>
+<h2 id="V17-手机验证的需求"><a href="#V17-手机验证的需求" class="headerlink" title="V17:手机验证的需求"></a>V17:手机验证的需求</h2><h2 id="V18-API和Web服务验证需求"><a href="#V18-API和Web服务验证需求" class="headerlink" title="V18:API和Web服务验证需求"></a>V18:API和Web服务验证需求</h2><ol>
+<li>验证客户端和服务端之间使用了相同的编码风格。</li>
+<li>验证Web服务应用程序中对管理功能的访问仅限于Web服务管理员。</li>
+<li>在接受输入之前，验证XML或JSON模式是否启用并进行验证。</li>
+<li>验证所有输入都被限制在适当的大小界限。</li>
+<li>验证基于SOAP的web服务是否符合Web Services-Interoperability(WS-I)基本概要。这实质上意味着TLS加密。</li>
+<li>通过使用一种或多种以下方法来保护REST服务不受跨站请求伪造的影响:双提交cookie模式,CSRF随机数，ORIGIN请求头检查和referrer请求头检查。</li>
+<li>验证REST服务明确地检查传入的Content-Type是否为预期类型，例如application/xml或者application/json。</li>
+<li>验证使用JSON Web签名或者SOAP请求的WS-Security的Payload信息是否已签名，以确保客户端与服务端之间传输的可靠性。</li>
+<li>验证可供选择的和不太安全的访问路径不存在。</li>
+</ol>
+<h2 id="V19-配置验证需求"><a href="#V19-配置验证需求" class="headerlink" title="V19:配置验证需求"></a>V19:配置验证需求</h2><ol>
+<li>验证所有组件都是最新的，具有适当的安全配置和版本。这应该包括删除不必要的配置和文件夹，如示例应用程序、平台文档和默认或示例用户。</li>
+<li>验证组件之间的通信(例如应用服务器和数据库服务器之间的通信)是加密的，特别是当组件位于不同的容器或不同的系统中时。</li>
+<li>验证组件之间的通信(例如应用服务器和数据库服务器之间的通信)使用具有最小必要权限的帐户进行验证。</li>
+<li>验证应用程序部署足够地沙箱、容器或隔离化，以延迟和阻止攻击者攻击其他应用程序。</li>
+<li>验证应用程序构建和部署过程是在安全且可重复的方法中执行的，例如CI / CD自动化和自动配置管理。</li>
+<li>验证授权管理员有能力验证所有与安全相关的配置的完整性，以检测篡改。</li>
+<li>验证所有的应用程序组件都已签名。</li>
+<li>验证第三方组件来自可信任的仓库。</li>
+<li>验证系统级语言的构建过程是否启用了所有安全标志，如ASLR、DEP和安全检查。</li>
+<li>验证所有应用程序资产都由应用程序承载，比如JavaScript库、CSS样式表和web字体都由应用程序承载，而不是依赖于CDN或外部供应商。</li>
+<li>验证所有应用程序组件、服务和服务器都使用它们自己的低特权服务帐户，这在应用程序之间不共享，管理员也不使用。</li>
+</ol>
+<h2 id="V20-IoT验证需求"><a href="#V20-IoT验证需求" class="headerlink" title="V20:IoT验证需求"></a>V20:IoT验证需求</h2><ol>
+<li>验证类似USB或串行接口的应用层调试已禁用。</li>
+<li>验证加密密钥对每个设备都是唯一的。</li>
+<li>如果适用，请验证嵌入式/物联网操作系统是否启用了诸如ASLR和DEP之类的内存保护控件。</li>
+<li>验证是否禁用了诸如JTAG或SWD之类的片上调试接口，或者是否启用并适当配置了可用的保护机制。</li>
+<li>验证设备上不会展示物理调试头。</li>
+<li>验证敏感数据没有在设备上未加密存储。</li>
+<li>验证设备能够防止敏感信息泄露。</li>
+<li>验证固件应用程序使用传输安全性保护数据传输。</li>
+<li>验证固件应用程序有效验证服务端连接的数字签名。</li>
+<li>验证无线通信是相互验证的。</li>
+<li>验证无线通信在加密通道进行传输。</li>
+<li>验证固件应用程序将数字签名固定到可信任的服务器上。</li>
+<li>验证物理防篡改和防篡改检测特性的存在，包括epxy。</li>
+<li>验证芯片上的识别标记已删除。</li>
+<li>验证芯片制造商提供的任何可用的知识产权保护技术已启用。</li>
+<li>验证安全控件启用来阻止对固件进行逆向工程(例如删除冗长的调试字符串)。</li>
+<li>验证设备在加载之前验证引导映像签名。</li>
+<li>验证固件更新过程不容易受到time-of-check和time-of-use攻击的影响。</li>
+<li>验证设备在安装之前使用代码签名并验证固件升级文件。</li>
+<li>验证设备不能被降级为有效固件的旧版本。</li>
+<li>验证在嵌入式设备上使用加密安全的伪随机数生成器(例如使用芯片提供的随机数生成器)。</li>
+<li>验证设备在检测到篡改或收到无效消息时擦拭固件和敏感数据。</li>
+<li>验证只使用支持禁用调试接口的微控制器(例如JTAG、SWD)。</li>
+<li>验证只使用对去盖和侧道攻击提供有效保护的微控制器。</li>
+<li>验证敏感痕迹没有暴露在印刷电路板的外层。</li>
+<li>验证芯片间的通信是加密的。</li>
+<li>验证设备在执行前使用代码签名并对代码进行验证。</li>
+<li>验证在内存中维护的敏感信息当不在需要时就用零覆盖。</li>
+<li>验证固件应用程序使用内核容器在应用程序之间进行隔离。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+	<div>
+	
+		<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	
+	</div>
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Cc丶MySunshine 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ASVS/" rel="tag"><i class="fa fa-tag"></i> ASVS</a>
+          
+            <a href="/tags/应用安全/" rel="tag"><i class="fa fa-tag"></i> 应用安全</a>
+          
+            <a href="/tags/安全评估/" rel="tag"><i class="fa fa-tag"></i> 安全评估</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/10/Python白盒审计工具整理/" rel="next" title="Python白盒审计工具整理">
+                <i class="fa fa-chevron-left"></i> Python白盒审计工具整理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/05/Windowsd端 + Linux端代理爬虫暗网数据/" rel="prev" title="Windowsd端 + Linux端代理爬虫暗网数据">
+                Windowsd端 + Linux端代理爬虫暗网数据 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Cc丶MySunshine">
+            
+              <p class="site-author-name" itemprop="name">Cc丶MySunshine</p>
+              <p class="site-description motion-element" itemprop="description">The one who wants to wear the crown must bear the weight</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是ASVS"><span class="nav-number">2.</span> <span class="nav-text">什么是ASVS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#V1-架构、设计和威胁建模需求"><span class="nav-number">2.1.</span> <span class="nav-text">V1:架构、设计和威胁建模需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V2-身份验证需求"><span class="nav-number">2.2.</span> <span class="nav-text">V2:身份验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V3-会话管理验证需求。"><span class="nav-number">2.3.</span> <span class="nav-text">V3:会话管理验证需求。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V4-访问控制验证需求"><span class="nav-number">2.4.</span> <span class="nav-text">V4:访问控制验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V5-输入验证和输出编码验证需求"><span class="nav-number">2.5.</span> <span class="nav-text">V5:输入验证和输出编码验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V7-密码验证需求"><span class="nav-number">2.6.</span> <span class="nav-text">V7:密码验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V8-错误处理和日志验证需求"><span class="nav-number">2.7.</span> <span class="nav-text">V8:错误处理和日志验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V9-数据保护验证要求"><span class="nav-number">2.8.</span> <span class="nav-text">V9:数据保护验证要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V10-通信验证需求"><span class="nav-number">2.9.</span> <span class="nav-text">V10:通信验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V13-恶意代码验证要求"><span class="nav-number">2.10.</span> <span class="nav-text">V13:恶意代码验证要求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V15-业务逻辑验证需求"><span class="nav-number">2.11.</span> <span class="nav-text">V15:业务逻辑验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V16-文件和资源验证需求"><span class="nav-number">2.12.</span> <span class="nav-text">V16:文件和资源验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V17-手机验证的需求"><span class="nav-number">2.13.</span> <span class="nav-text">V17:手机验证的需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V18-API和Web服务验证需求"><span class="nav-number">2.14.</span> <span class="nav-text">V18:API和Web服务验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V19-配置验证需求"><span class="nav-number">2.15.</span> <span class="nav-text">V19:配置验证需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#V20-IoT验证需求"><span class="nav-number">2.16.</span> <span class="nav-text">V20:IoT验证需求</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cc丶MySunshine</span>
+
+  
+</div>
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+-->
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
