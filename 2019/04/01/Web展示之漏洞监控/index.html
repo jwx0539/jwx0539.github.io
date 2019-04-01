@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="爬虫,Python,机器学习,数据分析,">
+  <meta name="keywords" content="爬虫,Python,Web展示,漏洞监控,">
 
 
 
@@ -79,29 +79,22 @@
 
 
 
-<meta name="description" content="0x01前言前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是">
-<meta name="keywords" content="爬虫,Python,机器学习,数据分析">
+<meta name="description" content="0x01 前言一转眼2019就到四月份了，一个Q过去了，接着要定下个Q的OKR，生活总是杂乱无章地进行着。负能量还蛮多的，不过迎来了阳光明媚的四月，心情还是变好了。以前总听这样一句话，我还是喜欢你，像四月的阳光明媚而不忧伤。有段时间没更博客了，就把之前搭建的内部漏洞信息监控系统写一下，毕竟在处理反爬等等一些内容时还是费了一些时间的。 0x02 结构 利用 Flask 写的简单Web展示，前端使用了">
+<meta name="keywords" content="爬虫,Python,Web展示,漏洞监控">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论">
-<meta property="og:url" content="http://yoursite.com/2018/05/06/爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论/index.html">
+<meta property="og:title" content="Web展示之漏洞监控">
+<meta property="og:url" content="http://yoursite.com/2019/04/01/Web展示之漏洞监控/index.html">
 <meta property="og:site_name" content="Poochi - Royal Never Give Up">
-<meta property="og:description" content="0x01前言前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是">
+<meta property="og:description" content="0x01 前言一转眼2019就到四月份了，一个Q过去了，接着要定下个Q的OKR，生活总是杂乱无章地进行着。负能量还蛮多的，不过迎来了阳光明媚的四月，心情还是变好了。以前总听这样一句话，我还是喜欢你，像四月的阳光明媚而不忧伤。有段时间没更博客了，就把之前搭建的内部漏洞信息监控系统写一下，毕竟在处理反爬等等一些内容时还是费了一些时间的。 0x02 结构 利用 Flask 写的简单Web展示，前端使用了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/dM2l850.png">
-<meta property="og:image" content="https://i.imgur.com/CQIv3d8.png">
-<meta property="og:image" content="https://i.imgur.com/rpoRbrV.png">
-<meta property="og:image" content="https://i.imgur.com/2twem9c.png">
-<meta property="og:image" content="https://i.imgur.com/HPtN9Ry.png">
-<meta property="og:image" content="https://i.imgur.com/lVSvJt3.png">
-<meta property="og:image" content="https://i.imgur.com/lfSD4rj.png">
-<meta property="og:image" content="https://i.imgur.com/o1UjqhE.png">
-<meta property="og:image" content="https://i.imgur.com/kuFX5lA.png">
-<meta property="og:image" content="https://i.imgur.com/q8SphfH.png">
-<meta property="og:updated_time" content="2018-05-07T01:55:25.000Z">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g1nfrxg2yij317a0m67dn.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tKfTcly1g1nfxvawrij31mi0u07av.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1ng04b7mjj31mj0u0dpp.jpg">
+<meta property="og:updated_time" content="2019-04-01T14:03:05.287Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论">
-<meta name="twitter:description" content="0x01前言前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是">
-<meta name="twitter:image" content="https://i.imgur.com/dM2l850.png">
+<meta name="twitter:title" content="Web展示之漏洞监控">
+<meta name="twitter:description" content="0x01 前言一转眼2019就到四月份了，一个Q过去了，接着要定下个Q的OKR，生活总是杂乱无章地进行着。负能量还蛮多的，不过迎来了阳光明媚的四月，心情还是变好了。以前总听这样一句话，我还是喜欢你，像四月的阳光明媚而不忧伤。有段时间没更博客了，就把之前搭建的内部漏洞信息监控系统写一下，毕竟在处理反爬等等一些内容时还是费了一些时间的。 0x02 结构 利用 Flask 写的简单Web展示，前端使用了">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g1nfrxg2yij317a0m67dn.jpg">
 
 
 
@@ -131,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/06/爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论/">
+  <link rel="canonical" href="http://yoursite.com/2019/04/01/Web展示之漏洞监控/">
 
 
 
 
 
-  <title>爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论 | Poochi - Royal Never Give Up</title>
+  <title>Web展示之漏洞监控 | Poochi - Royal Never Give Up</title>
   
 
 
@@ -284,7 +277,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/06/爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/01/Web展示之漏洞监控/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Poochi">
@@ -301,7 +294,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论</h1>
+          <h1 class="post-title" itemprop="name headline">Web展示之漏洞监控</h1>
         
 
         <div class="post-meta">
@@ -313,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-06T21:26:40+08:00">
-                2018-05-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-01T10:26:40+08:00">
+                2019-04-01
               </time>
             
 
@@ -373,35 +366,20 @@
       
 
       
-        <h1 id="0x01前言"><a href="#0x01前言" class="headerlink" title="0x01前言"></a>0x01前言</h1><p>前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是Demo版本。</p>
-<h1 id="0x01代码结构"><a href="#0x01代码结构" class="headerlink" title="0x01代码结构"></a>0x01代码结构</h1><p>废话不多说，先看代码结构。</p>
-<p><img src="https://i.imgur.com/dM2l850.png" alt></p>
-<p>最后的效果图，提供了两种机器学习的模型，一种是SVM，这里SVM模型提供了三个相差较大的参数；另外一种是朴素贝叶斯。因为只是做了一个二分类，所以同样可以使用的分类模型还有很多，像KNN，逻辑回归等等，都可以使用。</p>
-<p><img src="https://i.imgur.com/CQIv3d8.png" alt></p>
-<p>这是利用SVM模型进行学习获得的准确率</p>
-<p><img src="https://i.imgur.com/rpoRbrV.png" alt></p>
-<p>这是利用朴素贝叶斯进行学习返回的准确率</p>
-<p>当然这里关于学习的准确率，与数据集也有很大关系，由于爬虫时获得的数据未展开，只是静态爬虫，加上对文本特征处理的方法不完善，都会对准确率有一定的影响。</p>
-<h1 id="0x02实现过程"><a href="#0x02实现过程" class="headerlink" title="0x02实现过程"></a>0x02实现过程</h1><p>第一步当然是爬虫了，我这里采取的是静态爬虫，我是昨天爬取的豆瓣《后来的我们》影评，大约有3700条左右数据。爬取完之后发现一些较长的评论需要交互式点击爬虫，方能展开。所以仅利用静态爬虫的数据进行分析了，后期可以再修改爬取的数据吧。</p>
-<p>这里爬虫的部分，提取了两个内容。一是影评，二是分值，也就是观众的打分，分1-5分，分别为力荐、推荐、还行、较差、很差。爬的时候发现有些观众只评论并没有打分，考虑到后期还要数据清洗，就将未打分的评论归为还行一栏，然后做了一个二分类问题。3-5分也就是力荐、推荐、还行设置标签为1,1-2分也就是较差、很差设置标签为0。</p>
-<p><img src="https://i.imgur.com/2twem9c.png" alt></p>
-<p>然后爬虫得到的数据保存为csv如下：</p>
-<p><img src="https://i.imgur.com/HPtN9Ry.png" alt></p>
-<p>然后就是要对数据进行处理</p>
-<p><img src="https://i.imgur.com/lVSvJt3.png" alt></p>
-<p>这里有一点注意，在将爬取 汉字数据存取为csv时，要注意编码格式，这里用的是GB18030方可正常显示，有时会用gb2312等，用utf-8会显示汉字乱码。</p>
-<p>对数据集进行处理，添加两列，一列是label，另一列是对文本数据的处理，这里利用apply函数来转化</p>
-<p><img src="https://i.imgur.com/lfSD4rj.png" alt></p>
-<p>这个函数就是刚才的文本处理函数，其中引用一个停用词词库，在代码stop_words文件夹中。</p>
-<p>通过过文本数据的处理，接下来便可以进行特征提取，也就是文本数据转化为向量数据进行分析。</p>
-<p><img src="https://i.imgur.com/o1UjqhE.png" alt></p>
-<p>利用了TF-IDF特征提取和词袋模型进行特征提取，最后将特征横向合并。</p>
-<p><img src="https://i.imgur.com/kuFX5lA.png" alt></p>
-<p>最后也就是简单的构造机器学习模型了，分类问题可用的模型有很多，这里选取了SVM和朴素贝叶斯，也没考虑过拟合等等优化，关于对机器学习模型优化的集成学习后期再实践吧。</p>
-<h1 id="0x03总结"><a href="#0x03总结" class="headerlink" title="0x03总结"></a>0x03总结</h1><p>关于对爬虫数据的获取，还有很多要需要学习的地方。数据是进行一切分析的基础，有了数据才可进行数据统计分析和机器学习等等。文本数据分析中关于中文和英文的处理还是略有不同，写代码的过程遇到的坑也是需要不断的实践来弥补。最近更博频率有点高，需要克制一下，需要我做的事还有很多，比如说我突发奇想，想做一个电台类似的节目，类似于Dj，我说真的，软件我都搞好了，请看</p>
-<p><img src="https://i.imgur.com/q8SphfH.png" alt></p>
-<p>你们会喜欢吗?  下个路口，不见不散。</p>
-<h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p>代码地址：<a href="https://github.com/jwx0539/ML_CheckComments" target="_blank" rel="noopener">https://github.com/jwx0539/ML_CheckComments</a></p>
+        <h3 id="0x01-前言"><a href="#0x01-前言" class="headerlink" title="0x01 前言"></a>0x01 前言</h3><p>一转眼2019就到四月份了，一个Q过去了，接着要定下个Q的OKR，生活总是杂乱无章地进行着。负能量还蛮多的，不过迎来了阳光明媚的四月，心情还是变好了。以前总听这样一句话，我还是喜欢你，像四月的阳光明媚而不忧伤。有段时间没更博客了，就把之前搭建的内部漏洞信息监控系统写一下，毕竟在处理反爬等等一些内容时还是费了一些时间的。</p>
+<h3 id="0x02-结构"><a href="#0x02-结构" class="headerlink" title="0x02 结构"></a>0x02 结构</h3><p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1nfrxg2yij317a0m67dn.jpg" alt></p>
+<p>利用 Flask 写的简单Web展示，前端使用了部分layui的样式等。考虑到Flask在用装饰器定义路径时比较方便，如果使用Django或者Tornado显得更有条理一些。</p>
+<p>Web 展示和爬虫部分是分开的。Spider模块里是一些爬虫的脚本，将爬虫得到的数据存储到Mongo，然后Web展示则是从Mongo里面读取数据。</p>
+<h3 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h3><p>简单的界面如下：</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tKfTcly1g1nfxvawrij31mi0u07av.jpg" alt></p>
+<p>爬虫目前抓取了这几个数据源，后期可根据需要进行维护，添加自定义抓取的数据源。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tKfTcly1g1ng04b7mjj31mj0u0dpp.jpg" alt></p>
+<p>数据展示分了两个 Tab，按照时间顺序分今日和历史存储的数据进行展示，另外配合搜索框进行检索。</p>
+<h3 id="爬虫"><a href="#爬虫" class="headerlink" title="爬虫"></a>爬虫</h3><p>其实爬虫的数据是沿用了之前的一些，这里做了一些修改进行数据存储然后Web展示而已。</p>
+<p>Seebug 涉及到一些反爬，在搜索一些前人经验时，发现利用execjs执行整个js代码块时随着反爬升级总是会出现一些问题。于是想起去年先知白帽大会猪猪侠讲的Web 2.0启发式爬虫，其实有用到Pyppeteer这个库。其实这是node.js的Puppeteer库对Python的支持，使用这种方法暂时不会被反爬拦截，但是这个库要求Python3.6+。</p>
+<p>另外WeChat的爬虫是调用了搜狗微信的接口，但是也会遇到一些反爬的拦截，在前面的文章中补充了绕过反爬的方法，调用打码平台解封Ip，生产Cookie。还有暗网的爬虫会涉敏，就不公布了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>对于Web的书写也是初探，尤其是前端的一些内容，也是在一点点中积累。没办法，菜就得多学习，多学习一些框架，多尝试写一些Demo，才会有提高吧，更博的频率挺低的，而且发现好久没有更一些关于安全或者漏洞的内容了，最近再沉淀下吧，四月来了，愿你的心情像四月的阳光一样明媚。</p>
+<p>代码地址：<a href="https://github.com/jwx0539/securityMonitor" target="_blank" rel="noopener">https://github.com/jwx0539/securityMonitor</a></p>
 
       
     </div>
@@ -456,9 +434,9 @@
           
             <a href="/tags/Python/" rel="tag"><i class="fa fa-tag"></i> Python</a>
           
-            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i> 机器学习</a>
+            <a href="/tags/Web展示/" rel="tag"><i class="fa fa-tag"></i> Web展示</a>
           
-            <a href="/tags/数据分析/" rel="tag"><i class="fa fa-tag"></i> 数据分析</a>
+            <a href="/tags/漏洞监控/" rel="tag"><i class="fa fa-tag"></i> 漏洞监控</a>
           
         </div>
       
@@ -471,8 +449,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/01/此情可待成追忆 只是当时已惘然/" rel="next" title="此情可待成追忆 只是当时已惘然">
-                <i class="fa fa-chevron-left"></i> 此情可待成追忆 只是当时已惘然
+              <a href="/2019/01/29/无人问我粥可温/" rel="next" title="无人与我立黄昏 无人问我粥可温">
+                <i class="fa fa-chevron-left"></i> 无人与我立黄昏 无人问我粥可温
               </a>
             
           </div>
@@ -480,10 +458,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/10/Python白盒审计工具整理/" rel="prev" title="Python白盒审计工具整理">
-                Python白盒审计工具整理 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -617,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01前言"><span class="nav-number">1.</span> <span class="nav-text">0x01前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x01代码结构"><span class="nav-number">2.</span> <span class="nav-text">0x01代码结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x02实现过程"><span class="nav-number">3.</span> <span class="nav-text">0x02实现过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#0x03总结"><span class="nav-number">4.</span> <span class="nav-text">0x03总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码地址"><span class="nav-number">4.1.</span> <span class="nav-text">代码地址</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-前言"><span class="nav-number">1.</span> <span class="nav-text">0x01 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-结构"><span class="nav-number">2.</span> <span class="nav-text">0x02 结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#界面"><span class="nav-number">3.</span> <span class="nav-text">界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#爬虫"><span class="nav-number">4.</span> <span class="nav-text">爬虫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
