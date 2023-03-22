@@ -87,16 +87,16 @@
 <meta property="og:site_name" content="Poochi - Royal Never Give Up">
 <meta property="og:description" content="0x01前言前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/dM2l850.png">
-<meta property="og:image" content="https://i.imgur.com/CQIv3d8.png">
-<meta property="og:image" content="https://i.imgur.com/rpoRbrV.png">
-<meta property="og:image" content="https://i.imgur.com/HPtN9Ry.png">
-<meta property="og:image" content="https://i.imgur.com/q8SphfH.png">
-<meta property="og:updated_time" content="2019-11-07T04:03:35.000Z">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/4wn7Hmdoaf83ZE9.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/Og5eFlkVZ3KLrzE.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/zo91iwYyrVdksNu.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/gz5blenfLqv9x8V.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/hTa956mgyrCUxYB.png">
+<meta property="og:updated_time" content="2023-03-22T15:27:47.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬取电影《后来的我们》豆瓣影评进行文本数据机器学习检测恶意评论">
 <meta name="twitter:description" content="0x01前言前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是">
-<meta name="twitter:image" content="https://i.imgur.com/dM2l850.png">
+<meta name="twitter:image" content="https://s2.loli.net/2023/03/22/4wn7Hmdoaf83ZE9.png">
 
 
 
@@ -370,18 +370,18 @@
       
         <h1 id="0x01前言"><a href="#0x01前言" class="headerlink" title="0x01前言"></a>0x01前言</h1><p>前两天在地铁上看公众号，无意中看到有爬取豆瓣影评以及对爬取数据进行数据分析的文章，加上前段时间并未对机器学习进行实践，就打算从文本数据处理开始，后期再写一些CNN或者RNN模型等机器学习文章。然后就是最近《后来的我们》电影比较火，话说我还没去看呢，就以此为目标牛刀小试吧。先是爬取观众的影评，进行文本数据处理，再将文本数据提取特征转化为向量模型，利用机器学习来检查恶意评论，目前代码也只是Demo版本。</p>
 <h1 id="0x01代码结构"><a href="#0x01代码结构" class="headerlink" title="0x01代码结构"></a>0x01代码结构</h1><p>废话不多说，先看代码结构。</p>
-<p><img src="https://i.imgur.com/dM2l850.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/4wn7Hmdoaf83ZE9.png" alt></p>
 <p>最后的效果图，提供了两种机器学习的模型，一种是SVM，这里SVM模型提供了三个相差较大的参数；另外一种是朴素贝叶斯。因为只是做了一个二分类，所以同样可以使用的分类模型还有很多，像KNN，逻辑回归等等，都可以使用。</p>
-<p><img src="https://i.imgur.com/CQIv3d8.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/Og5eFlkVZ3KLrzE.png" alt></p>
 <p>这是利用SVM模型进行学习获得的准确率</p>
-<p><img src="https://i.imgur.com/rpoRbrV.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/zo91iwYyrVdksNu.png" alt></p>
 <p>这是利用朴素贝叶斯进行学习返回的准确率</p>
 <p>当然这里关于学习的准确率，与数据集也有很大关系，由于爬虫时获得的数据未展开，只是静态爬虫，加上对文本特征处理的方法不完善，都会对准确率有一定的影响。</p>
 <h1 id="0x02实现过程"><a href="#0x02实现过程" class="headerlink" title="0x02实现过程"></a>0x02实现过程</h1><p>第一步当然是爬虫了，我这里采取的是静态爬虫，我是昨天爬取的豆瓣《后来的我们》影评，大约有3700条左右数据。爬取完之后发现一些较长的评论需要交互式点击爬虫，方能展开。所以仅利用静态爬虫的数据进行分析了，后期可以再修改爬取的数据吧。</p>
 <p>这里爬虫的部分，提取了两个内容。一是影评，二是分值，也就是观众的打分，分1-5分，分别为力荐、推荐、还行、较差、很差。爬的时候发现有些观众只评论并没有打分，考虑到后期还要数据清洗，就将未打分的评论归为还行一栏，然后做了一个二分类问题。3-5分也就是力荐、推荐、还行设置标签为1,1-2分也就是较差、很差设置标签为0。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> i &lt; <span class="number">3700</span>:</span><br><span class="line">        i+=<span class="number">20</span></span><br><span class="line">        nums.append(i)</span><br><span class="line">    print(nums)</span><br><span class="line">    content = []</span><br><span class="line">    rank = []</span><br><span class="line">    <span class="keyword">for</span> num <span class="keyword">in</span> nums:</span><br><span class="line">        url = <span class="string">'https://movie.douban.com/subject/26683723/reviews?start='</span> + str(num)</span><br><span class="line">        res = requests.get(url=url,headers=headers)</span><br><span class="line">        <span class="comment">#print(res.text)</span></span><br><span class="line">        soup = bs(res.text,<span class="string">'html.parser'</span>)</span><br><span class="line">        divs = soup.find_all(<span class="string">'div'</span>,&#123;<span class="string">'class'</span>:<span class="string">'short-content'</span>&#125;)</span><br><span class="line">        spans = soup.find_all(<span class="string">'div'</span>,&#123;<span class="string">'class'</span>:<span class="string">'main review-item'</span>&#125;)</span><br><span class="line">        <span class="comment">#print(divs)</span></span><br><span class="line">        <span class="keyword">for</span> div <span class="keyword">in</span> divs:</span><br><span class="line">            comment = div.text.strip()</span><br><span class="line">            <span class="comment">#print(comment)</span></span><br><span class="line">            content.append(comment)</span><br></pre></td></tr></table></figure>
 <p>然后爬虫得到的数据保存为csv如下：</p>
-<p><img src="https://i.imgur.com/HPtN9Ry.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/gz5blenfLqv9x8V.png" alt></p>
 <p>然后就是要对数据进行处理</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">prepare_data</span><span class="params">()</span>:</span></span><br><span class="line">    df_movie = pd.read_csv(<span class="string">'./output/movie_comments.csv'</span>,encoding=<span class="string">'GB18030'</span>)</span><br><span class="line">    <span class="comment">#print(df_movie[:10])</span></span><br><span class="line">    <span class="comment">#添加标签</span></span><br><span class="line">    df_movie[<span class="string">'label'</span>] = df_movie[<span class="string">'分数'</span>].map(config.text_type_dic)</span><br><span class="line">    <span class="comment">#文本处理</span></span><br><span class="line">    df_movie[<span class="string">'proc_text'</span>] = df_movie[<span class="string">'影评'</span>].apply(preprocess_text)</span><br><span class="line">    <span class="comment">#保存结果</span></span><br><span class="line">    df_movie.to_csv(os.path.join(config.output_path,<span class="string">'new_comments.csv'</span>),encoding=<span class="string">"GB18030"</span>)</span><br><span class="line">    <span class="comment">#数据集划分</span></span><br><span class="line">    train_data, test_data = train_test_split(df_movie, test_size=<span class="number">1</span>/<span class="number">4</span>, random_state=<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">return</span> train_data, test_data</span><br></pre></td></tr></table></figure>
 <p>这里有一点注意，在将爬取 汉字数据存取为csv时，要注意编码格式，这里用的是GB18030方可正常显示，有时会用gb2312等，用utf-8会显示汉字乱码。</p>
@@ -394,7 +394,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">SVC_model</span><span class="params">()</span>:</span></span><br><span class="line">	train_data,test_data = utils.prepare_data()</span><br><span class="line">	print(<span class="string">'训练集有&#123;&#125;条记录。'</span>.format(len(train_data)))</span><br><span class="line">	print(<span class="string">'测试集有&#123;&#125;条记录。'</span>.format(len(test_data)))</span><br><span class="line">	X_train, X_test = utils.feature_engineering(train_data, test_data)</span><br><span class="line">	print(<span class="string">'共有&#123;&#125;维特征。'</span>.format(X_train.shape[<span class="number">1</span>]))</span><br><span class="line">	y_train = train_data[<span class="string">'label'</span>].values</span><br><span class="line">	y_test = test_data[<span class="string">'label'</span>].values</span><br><span class="line">    <span class="comment">#数据建模</span></span><br><span class="line">	c_values = [<span class="number">0.0001</span>, <span class="number">1</span>, <span class="number">10000</span>]</span><br><span class="line">	<span class="keyword">for</span> c_value <span class="keyword">in</span> c_values:</span><br><span class="line">		svm_model = SVC(C=c_value)</span><br><span class="line">		svm_model.fit(X_train,y_train)</span><br><span class="line">		y_pred = svm_model.predict(X_test)</span><br><span class="line">		print(<span class="string">'准确率：'</span>,accuracy_score(y_test,y_pred))</span><br></pre></td></tr></table></figure>
 <p>最后也就是简单的构造机器学习模型了，分类问题可用的模型有很多，这里选取了SVM和朴素贝叶斯，也没考虑过拟合等等优化，关于对机器学习模型优化的集成学习后期再实践吧。</p>
 <h1 id="0x03总结"><a href="#0x03总结" class="headerlink" title="0x03总结"></a>0x03总结</h1><p>关于对爬虫数据的获取，还有很多要需要学习的地方。数据是进行一切分析的基础，有了数据才可进行数据统计分析和机器学习等等。文本数据分析中关于中文和英文的处理还是略有不同，写代码的过程遇到的坑也是需要不断的实践来弥补。最近更博频率有点高，需要克制一下，需要我做的事还有很多，比如说我突发奇想，想做一个电台类似的节目，类似于Dj，我说真的，软件我都搞好了，请看</p>
-<p><img src="https://i.imgur.com/q8SphfH.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/hTa956mgyrCUxYB.png" alt></p>
 <p>你们会喜欢吗?  下个路口，不见不散。</p>
 <h2 id="代码地址"><a href="#代码地址" class="headerlink" title="代码地址"></a>代码地址</h2><p>代码地址：<a href="https://github.com/jwx0539/ML_CheckComments" target="_blank" rel="noopener">https://github.com/jwx0539/ML_CheckComments</a></p>
 

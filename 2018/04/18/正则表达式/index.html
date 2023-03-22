@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Poochi - Royal Never Give Up">
 <meta property="og:description" content="前言关于正则表达式，一直是检索的利器。最近在用bs提取html标签值的时候，会遇到标签难提取的特殊情况，于是就想到了正则表达式。正则表达式之前也简单整理过，但是发现没几天就忘了，果然是温故而知新，可以为师矣。 正则基础 贪婪模式和非贪婪模式 12345678import reret_greed= re.findall(r&apos;a(\d+)&apos;,&apos;a23b&apos;)print(ret_greed)   #贪婪r">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://i.imgur.com/k5AzaT4.jpg">
-<meta property="og:image" content="https://i.imgur.com/WGomPr7.png">
-<meta property="og:updated_time" content="2018-04-18T05:15:23.000Z">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/V3xNKarfFY8RBAi.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/22/ef7ysxqzhmAkP8Y.png">
+<meta property="og:updated_time" content="2023-03-22T15:20:37.178Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="利用正则表达式对爬取HTML标签进行检索提取">
 <meta name="twitter:description" content="前言关于正则表达式，一直是检索的利器。最近在用bs提取html标签值的时候，会遇到标签难提取的特殊情况，于是就想到了正则表达式。正则表达式之前也简单整理过，但是发现没几天就忘了，果然是温故而知新，可以为师矣。 正则基础 贪婪模式和非贪婪模式 12345678import reret_greed= re.findall(r&apos;a(\d+)&apos;,&apos;a23b&apos;)print(ret_greed)   #贪婪r">
-<meta name="twitter:image" content="https://i.imgur.com/k5AzaT4.jpg">
+<meta name="twitter:image" content="https://s2.loli.net/2023/03/22/V3xNKarfFY8RBAi.png">
 
 
 
@@ -366,7 +366,7 @@
 
       
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>关于正则表达式，一直是检索的利器。最近在用bs提取html标签值的时候，会遇到标签难提取的特殊情况，于是就想到了正则表达式。正则表达式之前也简单整理过，但是发现没几天就忘了，果然是温故而知新，可以为师矣。</p>
-<h1 id="正则基础"><a href="#正则基础" class="headerlink" title="正则基础"></a>正则基础</h1><p><img src="https://i.imgur.com/k5AzaT4.jpg" alt></p>
+<h1 id="正则基础"><a href="#正则基础" class="headerlink" title="正则基础"></a>正则基础</h1><p><img src="https://s2.loli.net/2023/03/22/V3xNKarfFY8RBAi.png" alt></p>
 <p>贪婪模式和<br>非贪婪模式</p>
 <pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">ret_greed= re.findall(<span class="string">r'a(\d+)'</span>,<span class="string">'a23b'</span>)</span><br><span class="line">print(ret_greed)   <span class="comment">#贪婪</span></span><br><span class="line">ret_no_greed= re.findall(<span class="string">r'a(\d+?)'</span>,<span class="string">'a23b'</span>)</span><br><span class="line">print(ret_no_greed)  <span class="comment">#非贪婪</span></span><br><span class="line"> </span><br><span class="line">[<span class="string">'23'</span>]  <span class="comment">#输出</span></span><br><span class="line">[<span class="string">'2'</span>]	<span class="comment">#输出</span></span><br></pre></td></tr></table></figure>
 </code></pre><p>正则表达式使用反斜杠” \ “来代表特殊形式或用作转义字符，这里跟Python的语法冲突，因此，Python用” \ “表示正则表达式中的” \ “，因为正则表达式中如果要匹配” \ “，需要用\来转义，变成” \ “，而Python语法中又需要对字符串中每一个\进行转义，所以就变成了” \ “。</p>
@@ -396,7 +396,7 @@
 </code></pre><p>当然很多时候可能不需要compiler，显得繁琐，另外这里对于html的dom结构来说，需要添加re.S|re.M参数进行检索，多行匹配。</p>
 <h2 id="获取超链接内容"><a href="#获取超链接内容" class="headerlink" title="获取超链接内容"></a>获取超链接内容</h2><pre><code><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re	</span><br><span class="line">content = <span class="string">'''</span></span><br><span class="line"><span class="string">&lt;td&gt; </span></span><br><span class="line"><span class="string">&lt;a href="https://127.0.0.1/demo.php" title="This is a demo"&gt;How are you &lt;/a&gt; </span></span><br><span class="line"><span class="string">&lt;a href="https://127.0.0.1/test.php" title="This is a test"&gt;Fine,thank you&lt;/a&gt; </span></span><br><span class="line"><span class="string">&lt;/td&gt; </span></span><br><span class="line"><span class="string">'''</span>  </span><br><span class="line"><span class="comment">#提取超链接之间的内容</span></span><br><span class="line">pattern_1 = <span class="string">r'&lt;a.*?&gt;(.*?)&lt;/a&gt;'</span></span><br><span class="line">res_content = re.findall(pattern_1,content,re.S|re.M)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> res_content:	</span><br><span class="line">	print(i)</span><br><span class="line"><span class="comment">#提取超链接的所有</span></span><br><span class="line">pattern_2 = <span class="string">r'&lt;a.*?&gt;.*?&lt;/a&gt;'</span></span><br><span class="line">res_href = re.findall(pattern_2,content,re.S|re.M)</span><br><span class="line"><span class="keyword">for</span> m <span class="keyword">in</span> res_href:</span><br><span class="line">	print(m)</span><br><span class="line"><span class="comment">#提取超链接的地址</span></span><br><span class="line">pattern_3 = <span class="string">r'&lt;a href="(.*?)".*?&gt;.*?&lt;/a&gt;'</span></span><br><span class="line">res_site = re.findall(pattern_3,content,re.S|re.M)</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> res_site:</span><br><span class="line">	print(n)</span><br></pre></td></tr></table></figure>
 </code></pre><p>输出结果：</p>
-<p><img src="https://i.imgur.com/WGomPr7.png" alt></p>
+<p><img src="https://s2.loli.net/2023/03/22/ef7ysxqzhmAkP8Y.png" alt></p>
 <p>通过对正则表达式的利用，可以对HTML指定的位置进行检索提取，以上两个两个例子也足够说明如何提取标签内或者行间数据，只需要对标签进行修改即可。</p>
 <h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>正则表达式是处理字符串的强大工具，可以简化很多繁琐的工作步骤。今后还是要多多使用正则表达式，才可以熟能生巧的。本篇没什么难点，开始慢慢养成做笔录的好习惯。好记性不如烂笔头，似不似呢，下个路口见。</p>
 
