@@ -87,15 +87,15 @@
 <meta property="og:site_name" content="Poochi - Royal Never Give Up">
 <meta property="og:description" content="0x01 漏洞背景8 月 28 日，Atlassian Confluence 官方发布安全通告，修复了存在于 Confluence 中的一处本地文件泄露漏洞（CVE-2019-3394）。 Confluence Server 和 Data Center 在页面导出功能中存在本地文件泄露漏洞：具有“添加页面”空间权限的远程攻击者，能够读取 /confluence/WEB-INF/ 目录下的任意文件。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnix9fjnj31aw0c63zt.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnst3te1j31h80ohtih.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pntxecy3j31ni03u3zg.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnusjdxsj31h90p80zo.jpg">
-<meta property="og:updated_time" content="2019-11-07T11:09:26.000Z">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/S4kLGH1wbfeljNn.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/btNTdxRhXgmYGs9.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/9YSlDQxkihXJ3um.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/GQBRuW7odcinXC5.png">
+<meta property="og:updated_time" content="2023-03-23T08:17:40.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="应急响应之Confluence本地文件泄露漏洞（CVE-2019-3394）">
 <meta name="twitter:description" content="0x01 漏洞背景8 月 28 日，Atlassian Confluence 官方发布安全通告，修复了存在于 Confluence 中的一处本地文件泄露漏洞（CVE-2019-3394）。 Confluence Server 和 Data Center 在页面导出功能中存在本地文件泄露漏洞：具有“添加页面”空间权限的远程攻击者，能够读取 /confluence/WEB-INF/ 目录下的任意文件。">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnix9fjnj31aw0c63zt.jpg">
+<meta name="twitter:image" content="https://s2.loli.net/2023/03/23/S4kLGH1wbfeljNn.png">
 
 
 
@@ -376,13 +376,13 @@
 <li>6.14.0 &lt;= version &lt; 6.15.8</li>
 </ul>
 <h3 id="0x03-漏洞复现"><a href="#0x03-漏洞复现" class="headerlink" title="0x03 漏洞复现"></a>0x03 漏洞复现</h3><p>本地搭建 Confluence 6.13.0， 创建页面处插入图片设置 url如下:</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnix9fjnj31aw0c63zt.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/S4kLGH1wbfeljNn.png" alt="image.png"></p>
 <p>然后发布时抓包，注意要删除拼接的 url，只保留绝对路径如下:</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnst3te1j31h80ohtih.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/btNTdxRhXgmYGs9.png" alt="image.png"></p>
 <p>发布成功后，查看图片链接如下:</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pntxecy3j31ni03u3zg.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/9YSlDQxkihXJ3um.png" alt="image.png"></p>
 <p>此时使用导出功能，可导出 web.xml 的内容</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8pnusjdxsj31h90p80zo.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/GQBRuW7odcinXC5.png" alt="image.png"></p>
 <p>该漏洞可用来读取本地文件，由于对目录跳转做了限制，只能读取 <install-directory>/confluence/WEB-INF/  文件夹下的任意文件，该目录可能包含用于与其他服务集成的配置文件，可能会泄漏认证凭据，例如 LDAP 认证凭据或其他敏感信息。</install-directory></p>
 <h3 id="0x04-漏洞修复"><a href="#0x04-漏洞修复" class="headerlink" title="0x04 漏洞修复"></a>0x04 漏洞修复</h3><ol>
 <li>升级 Confluence 到已修复漏洞的更新版本：6.15.8 或 6.13.7 或 6.6.16。</li>

